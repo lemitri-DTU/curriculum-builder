@@ -62,33 +62,16 @@ All tools are available as standalone HTML files. Simply open any of the followi
 | **SET** | Fall Examples | `SET-example-study-plans-fall.html` |
 | **SET** | Spring Examples | `SET-example-study-plans-spring.html` |
 
-### Browser Requirements
-
-- Modern web browser with JavaScript enabled
-- Chrome, Firefox, Safari, or Edge (latest versions recommended)
-- Screen resolution: 1024x768 or higher for optimal experience
 
 ## Programs Supported
 
 ### Sustainable Energy Systems (SES)
 A comprehensive MSc program focusing on the integrated design and optimization of sustainable energy systems. This program combines engineering fundamentals with advanced topics in renewable energy, grid management, and sustainability assessment.
 
-**Key Focus Areas:**
-- Energy systems planning and optimization
-- Renewable energy integration
-- Smart grids and energy storage
-- Life cycle assessment
-- Techno-economic analysis
 
 ### Sustainable Energy Technologies (SET)
 A specialized MSc program emphasizing specific sustainable energy technologies and their practical implementation. This program provides in-depth knowledge of modern energy conversion technologies and their deployment.
 
-**Key Focus Areas:**
-- Photovoltaic systems
-- Wind energy technology
-- Energy storage solutions
-- Thermal systems
-- Power electronics
 
 ## File Structure
 
@@ -117,11 +100,10 @@ curriculum-builder/
    - Start with the example study plans for your entry semester
 
 2. **Exploring Options**
-   - Use the Study Plan Explorer to understand program structure
-   - Review available courses and prerequisites
-   - Examine the campus visualization to understand class locations
+   - Use the Study Plan Explorer to understand program structure based on your interests
+   - Review available courses and program prerequisites
 
-3. **Building Your Plan**
+3. **Building Your Study Plan**
    - Open the Study Plan Builder for your program
    - Select courses based on your interests and requirements
    - Verify all program requirements are met
@@ -131,8 +113,6 @@ curriculum-builder/
 
 - Use the explorers to guide students through program options
 - Reference pre-built examples when discussing typical pathways
-- Combine builder tools with campus visualization for logistics planning
-- Compare student plans against program requirements
 
 ### For Program Administrators
 
@@ -143,29 +123,23 @@ curriculum-builder/
 
 ## Features in Detail
 
-### Course Management
-- View comprehensive course descriptions
-- Check prerequisites and dependencies
-- Understand credit requirements (ECTS)
+### Course Scheduling
+- View comprehensive course lists
 - See course scheduling across semesters
 
 ### Customization
 - Create personalized study plans
-- Mix and match elective courses
 - Explore different specialization pathways
 - Adapt plans to individual career goals
 
 ### Validation
-- Automatic checking against program requirements
+- Automatic checking against program/sopecialization requirements
 - Warning system for prerequisite mismatches
 - ECTS credit tracking
-- Specialization requirement verification
 
 ### Visualization
-- Interactive course networks
 - Timeline-based semester planning
-- Geographic campus layout
-- Dependency graphs
+- Campus, department, and program/specialization requirement overview
 
 ## System Requirements
 
@@ -195,13 +169,6 @@ We welcome contributions to improve these tools! To contribute:
 5. Push to the branch (`git push origin feature/improvement`)
 6. Open a Pull Request
 
-### Development Notes
-
-- Tools are built as standalone HTML files for easy deployment
-- No external dependencies required for production
-- JavaScript-based for client-side processing
-- Responsive design for multiple screen sizes
-
 ## Troubleshooting
 
 ### Common Issues
@@ -222,36 +189,8 @@ We welcome contributions to improve these tools! To contribute:
 - Contact program administration for curriculum updates
 - Clear cache to ensure latest version is loaded
 
-## Support & Feedback
-
-For issues, questions, or suggestions:
-- Open an issue on the project repository
-- Contact DTU program administration
-- Check program website for additional resources
-
-## Acknowledgments
-
-Developed for DTU's Sustainable Energy MSc Programs (SES & SET). Special thanks to all students, advisors, and faculty who provided feedback during development.
-
-## Roadmap
-
-Future enhancements may include:
-- Mobile app versions
-- Integration with DTU student portal
-- Real-time course availability updates
-- Advanced analytics for program outcomes
-- Peer network visualization
-- Course recommendation engine
-
-## Version History
-
-- **v1.0** - Initial release with SES and SET programs
-- **v1.1** - Added campus visualization tools
-- **v1.2** - Enhanced explorer with filtering and search
-
 ---
 
 **Last Updated:** March 2026  
-**Status:** Active Development  
-**Maintainer:** DTU Energy Systems Group
+**Status:** Active Development
 
