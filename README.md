@@ -9,7 +9,7 @@ The Curriculum Builder is a collection of interactive web-based tools designed t
 ## Features
 
 ### 📚 Study Plan Builder
-Interactive tools to create and customize personalized study plans:
+Interactive tools to create and customize personalized study plans (from scratch):
 - **SES Study Plan Builder** - Build custom study plans for the Sustainable Energy Systems program
 - **SET Study Plan Builder** - Build custom study plans for the Sustainable Energy Technologies program
 - Drag-and-drop course selection
