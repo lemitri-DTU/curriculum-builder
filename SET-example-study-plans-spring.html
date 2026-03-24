@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Example Study Plans — MSc Sustainable Energy Technologies (Spring Start)</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--red:#C0001B;--navy:#0f1923;--ink:#1a1a2e;--mist:#f4f2ee;--paper:#faf9f7;--white:#fff;--rule:#d8d4cc;
+--mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--mist);color:var(--ink);min-height:100vh;line-height:1.5}
+.hdr{background:var(--navy);color:#fff;border-left:6px solid var(--red);padding:28px 32px 24px 44px}
+.hdr-in{max-width:1000px;margin:0 auto}
+.hdr h1{font-size:24px;font-weight:300;letter-spacing:-.02em}
+.hdr h1 b{font-weight:600}
+.hdr p{font-size:12px;color:rgba(255,255,255,.5);margin-top:4px}
+.main{max-width:1000px;margin:0 auto;padding:28px 32px 80px}
+.intro{background:var(--white);border:1px solid var(--rule);border-radius:4px;padding:20px 24px;margin-bottom:24px;font-size:13px;color:#555;line-height:1.6}
+.intro strong{color:var(--ink)}
+.plan{background:var(--white);border:1px solid var(--rule);border-radius:4px;margin-bottom:28px;overflow:hidden}
+.plan-hdr{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--rule)}
+.plan-num{background:var(--red);color:#fff;font-family:var(--mono);font-size:11px;font-weight:600;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.plan-title{font-size:15px;font-weight:600;color:var(--navy)}
+.plan-spec{font-size:11px;color:#888;font-family:var(--mono);margin-left:auto;background:var(--paper);padding:3px 10px;border-radius:3px}
+.plan-desc{padding:14px 20px;font-size:12px;color:#666;border-bottom:1px solid var(--rule);line-height:1.5}
+.sem{margin:0;border-bottom:1px solid var(--rule)}
+.sem:last-child{border-bottom:none}
+.sem-hdr{display:flex;align-items:center;gap:10px;padding:10px 20px;background:var(--paper);font-size:12px;font-weight:600;color:var(--navy);font-family:var(--mono);letter-spacing:.03em}
+.sem-ects{font-weight:400;color:#999;margin-left:auto}
+.sem-grid{display:grid;gap:4px;padding:10px 20px 14px}
+.sem-grid.week13{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.sem-grid.week3{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.course{display:flex;align-items:stretch;border-radius:4px;overflow:hidden;border:1px solid rgba(0,0,0,.06);background:var(--white);min-height:42px}
+.course .bar{width:4px;flex-shrink:0;border-radius:4px 0 0 4px}
+.course .info{flex:1;padding:6px 8px;min-width:0}
+.course .code{font-size:10px;font-weight:600;font-family:var(--mono)}
+.course .name{font-size:9px;color:#666;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.course .meta{font-size:8px;color:#999;font-family:var(--mono);margin-top:1px;display:flex;gap:6px}
+.course .slot{color:#aaa}
+.legend{display:flex;flex-wrap:wrap;gap:10px;padding:10px 20px;border-top:1px solid var(--rule);font-size:9px;font-family:var(--mono)}
+.legend-item{display:flex;align-items:center;gap:4px}
+.legend-dot{width:8px;height:8px;border-radius:2px}
+.totals{padding:12px 20px;background:var(--paper);border-top:1px solid var(--rule);font-size:11px;font-family:var(--mono);color:#666}
+.totals b{color:var(--ink)}
+@media print{body{background:#fff}.plan{break-inside:avoid}.hdr{padding:16px 20px}}
+</style>
+</head>
+<body>
+<div class="hdr"><div class="hdr-in">
+  <h1><b>Example Study Plans</b> — MSc Sustainable Energy Technologies (Spring Start)</h1>
+  <p>DTU 2025 Curriculum · 10 student profiles · Thesis (30 ECTS) assumed in Fall of Year 2 (with thesis)</p>
+</div></div>
+<div class="main">
+<div class="intro">
+  These ten example plans show how different student profiles might structure their 120 ECTS MSc programme (90 ECTS courses + 30 ECTS thesis) when <strong>starting in Spring</strong>. Each plan satisfies all pool requirements for its chosen specialization. <strong>Polytechnic foundation</strong> and <strong>Innovation II</strong> courses are included. Course colors match the requirement pools shown in the builder for each specialization. The <strong>Study Plan Builder</strong> tool lets you replicate and customize these plans interactively.
+</div>
+<div class="plan">
+  <div class="plan-hdr">
+    <div class="plan-num">1</div>
+    <div class="plan-title">🔋 The Electrochemist</div>
+    <div class="plan-spec">Chemical Energy Conversion and Storage</div>
+  </div>
+  <div class="plan-desc">Electrochemistry and Energy Storage in Fall Y1, Functional Materials and Hydrogen in Spring. Battery Materials and Physics of Sustainable Energy in Year 2.</div>
+  <div class="sem">
+    <div class="sem-hdr">JANUARY — BEFORE YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#3b82f6"></div><div class="info"><div class="code" style="color:#3b82f6">42500</div><div class="name">Innovation in Engineering</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">SPRING — YEAR 1 <span class="sem-ects">30 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">47319</div><div class="name">Functional Materials</div><div class="meta"><span class="slot">Mon 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">47305</div><div class="name">Electrochemistry</div><div class="meta"><span class="slot">Tue 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#6b7280"></div><div class="info"><div class="code" style="color:#6b7280">46755</div><div class="name">Renewables in Electricity Markets</div><div class="meta"><span class="slot">Mon 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">47301</div><div class="name">Hydrogen Energy and Fuel Cells</div><div class="meta"><span class="slot">Thu 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46230</div><div class="name">Power System Balancing with Large Scale Wind Power</div><div class="meta"><span class="slot">Fri 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">34552</div><div class="name">Photovoltaic Systems</div><div class="meta"><span class="slot">Thu 8–12</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">JANUARY — YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">47302</div><div class="name">Hydrogen and Fuel Cell Chemistry — Experimental Course</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">FALL — YEAR 1 <span class="sem-ects">35 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">47330</div><div class="name">Energy Storage and Conversion</div><div class="meta"><span class="slot">Mon 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">46205</div><div class="name">Feasibility Studies of Energy Projects</div><div class="meta"><span class="slot">Tue 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">47338</div><div class="name">Organic Energy Materials</div><div class="meta"><span class="slot">Wed 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">10333</div><div class="name">Physics of Sustainable Energy</div><div class="meta"><span class="slot">Wed 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">42015</div><div class="name">Energy Economics</div><div class="meta"><span class="slot">Fri 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">28870</div><div class="name">Energy and Sustainability</div><div class="meta"><span class="slot">Tue 18–22</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#8b5cf6"></div><div class="info"><div class="code" style="color:#8b5cf6">38102</div><div class="name">Technology Entrepreneurship</div><div class="meta"><span class="slot">Thu 13–17</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">FALL — YEAR 2 (WITH THESIS) <span class="sem-ects">15 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">47310</div><div class="name">Battery Materials and Chemistries</div><div class="meta"><span class="slot">Wed 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#3b82f6"></div><div class="info"><div class="code" style="color:#3b82f6">12105</div><div class="name">Quantitative Methods to Assess Sustainability</div><div class="meta"><span class="slot">Tue 18–22</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#6b7280"></div><div class="info"><div class="code" style="color:#6b7280">46745</div><div class="name">Integration of Wind Power in the Power System</div><div class="meta"><span class="slot">Fri 13–17</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#C0001B"></div>Core Mandatory</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Polytechnic</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div>Innovation II</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div>Programme Specific</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#6b7280"></div>Elective</div>
+  </div>
+  <div class="totals">Courses: <b>90 ECTS</b> · Thesis: <b>30 ECTS</b> · Total: <b>120 ECTS</b></div>
+</div>
+
+<div class="plan">
+  <div class="plan-hdr">
+    <div class="plan-num">2</div>
+    <div class="plan-title">🌿 The Bioenergy Engineer</div>
+    <div class="plan-spec">Bio-based Fuels</div>
+  </div>
+  <div class="plan-desc">Biorefinery and Chemical Kinetics in Fall Y1, Green Fuels and BioReaction Engineering in Spring. Thermal Gasification in August, catalysis in Year 2.</div>
+  <div class="sem">
+    <div class="sem-hdr">JANUARY — BEFORE YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#3b82f6"></div><div class="info"><div class="code" style="color:#3b82f6">42500</div><div class="name">Innovation in Engineering</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">SPRING — YEAR 1 <span class="sem-ects">25 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">41418</div><div class="name">Green Fuels and Power-to-X</div><div class="meta"><span class="slot">Tue 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">28345</div><div class="name">Industrial BioReaction Engineering</div><div class="meta"><span class="slot">Tue 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#6b7280"></div><div class="info"><div class="code" style="color:#6b7280">46755</div><div class="name">Renewables in Electricity Markets</div><div class="meta"><span class="slot">Mon 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#6b7280"></div><div class="info"><div class="code" style="color:#6b7280">46740</div><div class="name">Distributed Energy Technologies, Modelling and Control</div><div class="meta"><span class="slot">Thu 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#6b7280"></div><div class="info"><div class="code" style="color:#6b7280">46120</div><div class="name">Scientific Programming for Wind Energy</div><div class="meta"><span class="slot">Thu 8–12</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">AUGUST — YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">28271</div><div class="name">Thermal Gasification, Pyrolysis and Sustainability</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">FALL — YEAR 1 <span class="sem-ects">30 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">28242</div><div class="name">Chemical Kinetics and Catalysis</div><div class="meta"><span class="slot">Mon 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">46205</div><div class="name">Feasibility Studies of Energy Projects</div><div class="meta"><span class="slot">Tue 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">28872</div><div class="name">Biorefinery</div><div class="meta"><span class="slot">Fri 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">28870</div><div class="name">Energy and Sustainability</div><div class="meta"><span class="slot">Tue 18–22</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">42015</div><div class="name">Energy Economics</div><div class="meta"><span class="slot">Fri 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#8b5cf6"></div><div class="info"><div class="code" style="color:#8b5cf6">28485</div><div class="name">Biobusiness and Process Innovation</div><div class="meta"><span class="slot">Thu 13–17</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">FALL — YEAR 2 (WITH THESIS) <span class="sem-ects">20 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#6b7280"></div><div class="info"><div class="code" style="color:#6b7280">47330</div><div class="name">Energy Storage and Conversion</div><div class="meta"><span class="slot">Mon 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#3b82f6"></div><div class="info"><div class="code" style="color:#3b82f6">12105</div><div class="name">Quantitative Methods to Assess Sustainability</div><div class="meta"><span class="slot">Tue 18–22</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#6b7280"></div><div class="info"><div class="code" style="color:#6b7280">41417</div><div class="name">Digitalization of Thermal Energy Technologies</div><div class="meta"><span class="slot">Thu 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">10339</div><div class="name">Concepts in Heterogeneous Catalysis and Applications to Energy Conversion</div><div class="meta"><span class="slot">Fri 13–17</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">JUNE — YEAR 2 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#6b7280"></div><div class="info"><div class="code" style="color:#6b7280">41343</div><div class="name">Fuels and Emissions from Current and Future Transportation</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#C0001B"></div>Core Mandatory</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Polytechnic</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div>Innovation II</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div>Programme Specific</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#6b7280"></div>Elective</div>
+  </div>
+  <div class="totals">Courses: <b>90 ECTS</b> · Thesis: <b>30 ECTS</b> · Total: <b>120 ECTS</b></div>
+</div>
+
+<div class="plan">
+  <div class="plan-hdr">
+    <div class="plan-num">3</div>
+    <div class="plan-title">☀️ The Solar Cell Researcher</div>
+    <div class="plan-spec">Solar Energy</div>
+  </div>
+  <div class="plan-desc">PV fundamentals, Solar Resource Assessment, and LED physics in Fall Y1. Solar Heating (10 ECTS) and PV Systems in Spring. Thin Film PV in January, Applied PV in June.</div>
+  <div class="sem">
+    <div class="sem-hdr">JANUARY — BEFORE YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#3b82f6"></div><div class="info"><div class="code" style="color:#3b82f6">42500</div><div class="name">Innovation in Engineering</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">SPRING — YEAR 1 <span class="sem-ects">30 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#6b7280"></div><div class="info"><div class="code" style="color:#6b7280">46215</div><div class="name">Socio-technical Dimensions of Renewable Energy</div><div class="meta"><span class="slot">Mon 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">41464</div><div class="name">Solar Heating Systems</div><div class="meta"><span class="slot">Tue 8–12</span><span>10 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">34552</div><div class="name">Photovoltaic Systems</div><div class="meta"><span class="slot">Thu 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46755</div><div class="name">Renewables in Electricity Markets</div><div class="meta"><span class="slot">Mon 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46740</div><div class="name">Distributed Energy Technologies, Modelling and Control</div><div class="meta"><span class="slot">Thu 13–17</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">JANUARY — YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">34551</div><div class="name">Thin Film Photovoltaics</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">JUNE — YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">34553</div><div class="name">Applied Photovoltaics</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">FALL — YEAR 1 <span class="sem-ects">30 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">34540</div><div class="name">Light Emitting Diodes and Photovoltaics for Energy Applications</div><div class="meta"><span class="slot">Mon 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">46205</div><div class="name">Feasibility Studies of Energy Projects</div><div class="meta"><span class="slot">Tue 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">41469</div><div class="name">Solar Resource Assessment and Forecasting</div><div class="meta"><span class="slot">Tue 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">42015</div><div class="name">Energy Economics</div><div class="meta"><span class="slot">Fri 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">28870</div><div class="name">Energy and Sustainability</div><div class="meta"><span class="slot">Tue 18–22</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#8b5cf6"></div><div class="info"><div class="code" style="color:#8b5cf6">34541</div><div class="name">Entrepreneurship in Photonics and Communications</div><div class="meta"><span class="slot">Thu 13–17</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">FALL — YEAR 2 (WITH THESIS) <span class="sem-ects">15 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">41461</div><div class="name">Building Integrated Photovoltaics</div><div class="meta"><span class="slot">Thu 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#3b82f6"></div><div class="info"><div class="code" style="color:#3b82f6">12105</div><div class="name">Quantitative Methods to Assess Sustainability</div><div class="meta"><span class="slot">Tue 18–22</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">47330</div><div class="name">Energy Storage and Conversion</div><div class="meta"><span class="slot">Mon 8–12</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#C0001B"></div>Core Mandatory</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Polytechnic</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div>Innovation II</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div>Programme Specific</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#6b7280"></div>Elective</div>
+  </div>
+  <div class="totals">Courses: <b>90 ECTS</b> · Thesis: <b>30 ECTS</b> · Total: <b>120 ECTS</b></div>
+</div>
+
+<div class="plan">
+  <div class="plan-hdr">
+    <div class="plan-num">4</div>
+    <div class="plan-title">🌬️ The Wind Turbine Engineer</div>
+    <div class="plan-spec">Wind Energy</div>
+  </div>
+  <div class="plan-desc">Wind Turbine Technology (10 ECTS) and Micrometeorology in Fall Y1. Aeroelasticity (10 ECTS) and Scientific Programming in Spring. Loads & Control in Year 2.</div>
+  <div class="sem">
+    <div class="sem-hdr">JANUARY — BEFORE YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#8b5cf6"></div><div class="info"><div class="code" style="color:#8b5cf6">41636</div><div class="name">Design for Circular Economy</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">JANUARY — BEFORE YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#3b82f6"></div><div class="info"><div class="code" style="color:#3b82f6">42500</div><div class="name">Innovation in Engineering</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">SPRING — YEAR 1 <span class="sem-ects">25 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46310</div><div class="name">Wind Turbine Aeroelasticity</div><div class="meta"><span class="slot">Wed 8–12</span><span>10 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46120</div><div class="name">Scientific Programming for Wind Energy</div><div class="meta"><span class="slot">Thu 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46755</div><div class="name">Renewables in Electricity Markets</div><div class="meta"><span class="slot">Mon 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46230</div><div class="name">Power System Balancing with Large Scale Wind Power</div><div class="meta"><span class="slot">Fri 8–12</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">JANUARY — YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">46200</div><div class="name">Planning and Development of Wind Farms</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">FALL — YEAR 1 <span class="sem-ects">30 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">46300</div><div class="name">Wind Turbine Technology and Aerodynamics</div><div class="meta"><span class="slot">Mon 8–12</span><span>10 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">46205</div><div class="name">Feasibility Studies of Energy Projects</div><div class="meta"><span class="slot">Tue 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46100</div><div class="name">Introduction to Micrometeorology for Wind Energy</div><div class="meta"><span class="slot">Thu 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">28870</div><div class="name">Energy and Sustainability</div><div class="meta"><span class="slot">Tue 18–22</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">42015</div><div class="name">Energy Economics</div><div class="meta"><span class="slot">Fri 13–17</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">FALL — YEAR 2 (WITH THESIS) <span class="sem-ects">20 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46320</div><div class="name">Loads, Aerodynamics and Control of Wind Turbines</div><div class="meta"><span class="slot">Wed 8–12</span><span>10 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#3b82f6"></div><div class="info"><div class="code" style="color:#3b82f6">12105</div><div class="name">Quantitative Methods to Assess Sustainability</div><div class="meta"><span class="slot">Tue 18–22</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46500</div><div class="name">Probabilistic Methods in Wind Energy</div><div class="meta"><span class="slot">Mon 13–17</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#C0001B"></div>Core Mandatory</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Polytechnic</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div>Innovation II</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div>Programme Specific</div>
+  </div>
+  <div class="totals">Courses: <b>90 ECTS</b> · Thesis: <b>30 ECTS</b> · Total: <b>120 ECTS</b></div>
+</div>
+
+<div class="plan">
+  <div class="plan-hdr">
+    <div class="plan-num">5</div>
+    <div class="plan-title">🔥 The Thermal Systems Engineer</div>
+    <div class="plan-spec">Thermal Energy Conversion and Storage</div>
+  </div>
+  <div class="plan-desc">Digitalization of Thermal Energy and Fluid Mechanics in Fall Y1. Energy Systems Optimization (10 ECTS) and Green Fuels in Spring. Heat Pumps and Industrial Storage in Year 2.</div>
+  <div class="sem">
+    <div class="sem-hdr">JANUARY — BEFORE YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#8b5cf6"></div><div class="info"><div class="code" style="color:#8b5cf6">41636</div><div class="name">Design for Circular Economy</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">JANUARY — BEFORE YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#3b82f6"></div><div class="info"><div class="code" style="color:#3b82f6">42500</div><div class="name">Innovation in Engineering</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">SPRING — YEAR 1 <span class="sem-ects">25 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">41416</div><div class="name">Energy Systems — Analysis, Design and Optimization</div><div class="meta"><span class="slot">Wed 8–12</span><span>10 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">41468</div><div class="name">Sustainable District Heating</div><div class="meta"><span class="slot">Mon 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">41418</div><div class="name">Green Fuels and Power-to-X</div><div class="meta"><span class="slot">Tue 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#6b7280"></div><div class="info"><div class="code" style="color:#6b7280">46740</div><div class="name">Distributed Energy Technologies, Modelling and Control</div><div class="meta"><span class="slot">Thu 13–17</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">JUNE — YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#6b7280"></div><div class="info"><div class="code" style="color:#6b7280">41343</div><div class="name">Fuels and Emissions from Current and Future Transportation</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">FALL — YEAR 1 <span class="sem-ects">30 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#6b7280"></div><div class="info"><div class="code" style="color:#6b7280">47330</div><div class="name">Energy Storage and Conversion</div><div class="meta"><span class="slot">Mon 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">46205</div><div class="name">Feasibility Studies of Energy Projects</div><div class="meta"><span class="slot">Tue 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">41417</div><div class="name">Digitalization of Thermal Energy Technologies</div><div class="meta"><span class="slot">Thu 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">41320</div><div class="name">Advanced Fluid Mechanics</div><div class="meta"><span class="slot">Thu 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">28870</div><div class="name">Energy and Sustainability</div><div class="meta"><span class="slot">Tue 18–22</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">42015</div><div class="name">Energy Economics</div><div class="meta"><span class="slot">Fri 13–17</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">FALL — YEAR 2 (WITH THESIS) <span class="sem-ects">20 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">41420</div><div class="name">Refrigeration and Heat Pump Technology</div><div class="meta"><span class="slot">Wed 8–12</span><span>10 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#3b82f6"></div><div class="info"><div class="code" style="color:#3b82f6">12105</div><div class="name">Quantitative Methods to Assess Sustainability</div><div class="meta"><span class="slot">Tue 18–22</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">41419</div><div class="name">Advanced Industrial Thermal Energy Storage</div><div class="meta"><span class="slot">Mon 8–12</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#C0001B"></div>Core Mandatory</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Polytechnic</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div>Innovation II</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div>Programme Specific</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#6b7280"></div>Elective</div>
+  </div>
+  <div class="totals">Courses: <b>90 ECTS</b> · Thesis: <b>30 ECTS</b> · Total: <b>120 ECTS</b></div>
+</div>
+
+<div class="plan">
+  <div class="plan-hdr">
+    <div class="plan-num">6</div>
+    <div class="plan-title">🔬 The Green Fuels Pioneer</div>
+    <div class="plan-spec">General</div>
+  </div>
+  <div class="plan-desc">Energy Storage and Physics of Sustainable Energy in Fall Y1. Green Fuels, Hydrogen, and Socio-technical Dimensions in Spring. H&FC Lab in January, AI Self-driving Labs in June.</div>
+  <div class="sem">
+    <div class="sem-hdr">JANUARY — BEFORE YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#3b82f6"></div><div class="info"><div class="code" style="color:#3b82f6">42500</div><div class="name">Innovation in Engineering</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">SPRING — YEAR 1 <span class="sem-ects">30 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46215</div><div class="name">Socio-technical Dimensions of Renewable Energy</div><div class="meta"><span class="slot">Mon 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">41418</div><div class="name">Green Fuels and Power-to-X</div><div class="meta"><span class="slot">Tue 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46755</div><div class="name">Renewables in Electricity Markets</div><div class="meta"><span class="slot">Mon 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">47301</div><div class="name">Hydrogen Energy and Fuel Cells</div><div class="meta"><span class="slot">Thu 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46230</div><div class="name">Power System Balancing with Large Scale Wind Power</div><div class="meta"><span class="slot">Fri 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">34552</div><div class="name">Photovoltaic Systems</div><div class="meta"><span class="slot">Thu 8–12</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">JANUARY — YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">47302</div><div class="name">Hydrogen and Fuel Cell Chemistry — Experimental Course</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">JUNE — YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">47332</div><div class="name">AI-orchestrated Self-driving Labs</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">FALL — YEAR 1 <span class="sem-ects">30 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">47330</div><div class="name">Energy Storage and Conversion</div><div class="meta"><span class="slot">Mon 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">46205</div><div class="name">Feasibility Studies of Energy Projects</div><div class="meta"><span class="slot">Tue 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">10333</div><div class="name">Physics of Sustainable Energy</div><div class="meta"><span class="slot">Wed 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">28870</div><div class="name">Energy and Sustainability</div><div class="meta"><span class="slot">Tue 18–22</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">42015</div><div class="name">Energy Economics</div><div class="meta"><span class="slot">Fri 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#8b5cf6"></div><div class="info"><div class="code" style="color:#8b5cf6">38102</div><div class="name">Technology Entrepreneurship</div><div class="meta"><span class="slot">Thu 13–17</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">FALL — YEAR 2 (WITH THESIS) <span class="sem-ects">15 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">47310</div><div class="name">Battery Materials and Chemistries</div><div class="meta"><span class="slot">Wed 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#3b82f6"></div><div class="info"><div class="code" style="color:#3b82f6">12105</div><div class="name">Quantitative Methods to Assess Sustainability</div><div class="meta"><span class="slot">Tue 18–22</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46745</div><div class="name">Integration of Wind Power in the Power System</div><div class="meta"><span class="slot">Fri 13–17</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#C0001B"></div>Core Mandatory</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Polytechnic</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div>Innovation II</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div>Programme Specific</div>
+  </div>
+  <div class="totals">Courses: <b>90 ECTS</b> · Thesis: <b>30 ECTS</b> · Total: <b>120 ECTS</b></div>
+</div>
+
+<div class="plan">
+  <div class="plan-hdr">
+    <div class="plan-num">7</div>
+    <div class="plan-title">🧪 The Materials Scientist</div>
+    <div class="plan-spec">Chemical Energy Conversion and Storage</div>
+  </div>
+  <div class="plan-desc">AI for Materials (10 ECTS) and Energy Storage in Fall Y1. Electrochemistry, Functional Materials, and Atomic-scale Modelling in Spring. Electron Microscopy and Battery Materials in Year 2.</div>
+  <div class="sem">
+    <div class="sem-hdr">JANUARY — BEFORE YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#3b82f6"></div><div class="info"><div class="code" style="color:#3b82f6">42500</div><div class="name">Innovation in Engineering</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">SPRING — YEAR 1 <span class="sem-ects">25 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">47319</div><div class="name">Functional Materials</div><div class="meta"><span class="slot">Mon 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">47305</div><div class="name">Electrochemistry</div><div class="meta"><span class="slot">Tue 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#6b7280"></div><div class="info"><div class="code" style="color:#6b7280">46755</div><div class="name">Renewables in Electricity Markets</div><div class="meta"><span class="slot">Mon 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">47335</div><div class="name">Atomic-scale Modelling of Energy Materials (Online)</div><div class="meta"><span class="slot">Fri 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">47301</div><div class="name">Hydrogen Energy and Fuel Cells</div><div class="meta"><span class="slot">Thu 13–17</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">JUNE — YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">47332</div><div class="name">AI-orchestrated Self-driving Labs</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">FALL — YEAR 1 <span class="sem-ects">30 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">47330</div><div class="name">Energy Storage and Conversion</div><div class="meta"><span class="slot">Mon 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">46205</div><div class="name">Feasibility Studies of Energy Projects</div><div class="meta"><span class="slot">Tue 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">47341</div><div class="name">AI4Materials: AI for Accelerated Materials Design</div><div class="meta"><span class="slot">Wed 8–12</span><span>10 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">28870</div><div class="name">Energy and Sustainability</div><div class="meta"><span class="slot">Tue 18–22</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">42015</div><div class="name">Energy Economics</div><div class="meta"><span class="slot">Fri 13–17</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">FALL — YEAR 2 (WITH THESIS) <span class="sem-ects">25 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">47338</div><div class="name">Organic Energy Materials</div><div class="meta"><span class="slot">Wed 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">47310</div><div class="name">Battery Materials and Chemistries</div><div class="meta"><span class="slot">Wed 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">47333</div><div class="name">Electron Microscopy for Materials Science</div><div class="meta"><span class="slot">Tue 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#3b82f6"></div><div class="info"><div class="code" style="color:#3b82f6">12105</div><div class="name">Quantitative Methods to Assess Sustainability</div><div class="meta"><span class="slot">Tue 18–22</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#8b5cf6"></div><div class="info"><div class="code" style="color:#8b5cf6">38102</div><div class="name">Technology Entrepreneurship</div><div class="meta"><span class="slot">Thu 13–17</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#C0001B"></div>Core Mandatory</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Polytechnic</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div>Innovation II</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div>Programme Specific</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#6b7280"></div>Elective</div>
+  </div>
+  <div class="totals">Courses: <b>90 ECTS</b> · Thesis: <b>30 ECTS</b> · Total: <b>120 ECTS</b></div>
+</div>
+
+<div class="plan">
+  <div class="plan-hdr">
+    <div class="plan-num">8</div>
+    <div class="plan-title">⚓ The Offshore Wind Developer</div>
+    <div class="plan-spec">Wind Energy</div>
+  </div>
+  <div class="plan-desc">Offshore Wind (10 ECTS) and HVDC Transmission in Fall Y1. Renewables in Markets, Scientific Programming, and Socio-technical Dimensions in Spring. Wind Turbine Technology in Year 2.</div>
+  <div class="sem">
+    <div class="sem-hdr">JANUARY — BEFORE YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#8b5cf6"></div><div class="info"><div class="code" style="color:#8b5cf6">41636</div><div class="name">Design for Circular Economy</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">JANUARY — BEFORE YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#3b82f6"></div><div class="info"><div class="code" style="color:#3b82f6">42500</div><div class="name">Innovation in Engineering</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">SPRING — YEAR 1 <span class="sem-ects">25 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46215</div><div class="name">Socio-technical Dimensions of Renewable Energy</div><div class="meta"><span class="slot">Mon 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46755</div><div class="name">Renewables in Electricity Markets</div><div class="meta"><span class="slot">Mon 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46120</div><div class="name">Scientific Programming for Wind Energy</div><div class="meta"><span class="slot">Thu 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46230</div><div class="name">Power System Balancing with Large Scale Wind Power</div><div class="meta"><span class="slot">Fri 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46740</div><div class="name">Distributed Energy Technologies, Modelling and Control</div><div class="meta"><span class="slot">Thu 13–17</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">JANUARY — YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">46200</div><div class="name">Planning and Development of Wind Farms</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">FALL — YEAR 1 <span class="sem-ects">30 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">46205</div><div class="name">Feasibility Studies of Energy Projects</div><div class="meta"><span class="slot">Tue 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46550</div><div class="name">Offshore Wind Grid Connection and HVDC Transmission</div><div class="meta"><span class="slot">Fri 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">28870</div><div class="name">Energy and Sustainability</div><div class="meta"><span class="slot">Tue 18–22</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">42015</div><div class="name">Energy Economics</div><div class="meta"><span class="slot">Fri 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">46300</div><div class="name">Wind Turbine Technology and Aerodynamics</div><div class="meta"><span class="slot">Mon 8–12</span><span>10 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">FALL — YEAR 2 (WITH THESIS) <span class="sem-ects">20 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46211</div><div class="name">Offshore Wind Energy</div><div class="meta"><span class="slot">Tue 13–17</span><span>10 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46745</div><div class="name">Integration of Wind Power in the Power System</div><div class="meta"><span class="slot">Fri 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#3b82f6"></div><div class="info"><div class="code" style="color:#3b82f6">12105</div><div class="name">Quantitative Methods to Assess Sustainability</div><div class="meta"><span class="slot">Tue 18–22</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#C0001B"></div>Core Mandatory</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Polytechnic</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div>Innovation II</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div>Programme Specific</div>
+  </div>
+  <div class="totals">Courses: <b>90 ECTS</b> · Thesis: <b>30 ECTS</b> · Total: <b>120 ECTS</b></div>
+</div>
+
+<div class="plan">
+  <div class="plan-hdr">
+    <div class="plan-num">9</div>
+    <div class="plan-title">🏠 The Sustainable Heating Expert</div>
+    <div class="plan-spec">Thermal Energy Conversion and Storage</div>
+  </div>
+  <div class="plan-desc">Digitalization of Thermal Energy and Energy Storage in Fall Y1. Energy Systems Optimization (10 ECTS), Solar Heating, and District Heating in Spring. Fluid Mechanics and Solar Resource in Year 2.</div>
+  <div class="sem">
+    <div class="sem-hdr">JANUARY — BEFORE YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#8b5cf6"></div><div class="info"><div class="code" style="color:#8b5cf6">41636</div><div class="name">Design for Circular Economy</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">JANUARY — BEFORE YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#3b82f6"></div><div class="info"><div class="code" style="color:#3b82f6">42500</div><div class="name">Innovation in Engineering</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">SPRING — YEAR 1 <span class="sem-ects">30 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">41416</div><div class="name">Energy Systems — Analysis, Design and Optimization</div><div class="meta"><span class="slot">Wed 8–12</span><span>10 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">41468</div><div class="name">Sustainable District Heating</div><div class="meta"><span class="slot">Mon 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">41464</div><div class="name">Solar Heating Systems</div><div class="meta"><span class="slot">Tue 8–12</span><span>10 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#6b7280"></div><div class="info"><div class="code" style="color:#6b7280">46740</div><div class="name">Distributed Energy Technologies, Modelling and Control</div><div class="meta"><span class="slot">Thu 13–17</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">JUNE — YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#6b7280"></div><div class="info"><div class="code" style="color:#6b7280">41343</div><div class="name">Fuels and Emissions from Current and Future Transportation</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">FALL — YEAR 1 <span class="sem-ects">25 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#6b7280"></div><div class="info"><div class="code" style="color:#6b7280">47330</div><div class="name">Energy Storage and Conversion</div><div class="meta"><span class="slot">Mon 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">46205</div><div class="name">Feasibility Studies of Energy Projects</div><div class="meta"><span class="slot">Tue 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">41417</div><div class="name">Digitalization of Thermal Energy Technologies</div><div class="meta"><span class="slot">Thu 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">28870</div><div class="name">Energy and Sustainability</div><div class="meta"><span class="slot">Tue 18–22</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">42015</div><div class="name">Energy Economics</div><div class="meta"><span class="slot">Fri 13–17</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">FALL — YEAR 2 (WITH THESIS) <span class="sem-ects">20 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">41419</div><div class="name">Advanced Industrial Thermal Energy Storage</div><div class="meta"><span class="slot">Mon 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">41320</div><div class="name">Advanced Fluid Mechanics</div><div class="meta"><span class="slot">Thu 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#3b82f6"></div><div class="info"><div class="code" style="color:#3b82f6">12105</div><div class="name">Quantitative Methods to Assess Sustainability</div><div class="meta"><span class="slot">Tue 18–22</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#6b7280"></div><div class="info"><div class="code" style="color:#6b7280">10333</div><div class="name">Physics of Sustainable Energy</div><div class="meta"><span class="slot">Wed 13–17</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#C0001B"></div>Core Mandatory</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Polytechnic</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div>Innovation II</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div>Programme Specific</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#6b7280"></div>Elective</div>
+  </div>
+  <div class="totals">Courses: <b>90 ECTS</b> · Thesis: <b>30 ECTS</b> · Total: <b>120 ECTS</b></div>
+</div>
+
+<div class="plan">
+  <div class="plan-hdr">
+    <div class="plan-num">10</div>
+    <div class="plan-title">🌍 The Energy Generalist</div>
+    <div class="plan-spec">General</div>
+  </div>
+  <div class="plan-desc">Broad sampling: Energy Storage, PV fundamentals, and Physics of Sustainable Energy in Fall Y1. Green Fuels, PV Systems, and Socio-technical Dimensions in Spring. Wind Turbine Technology in Year 2.</div>
+  <div class="sem">
+    <div class="sem-hdr">JANUARY — BEFORE YEAR 1 <span class="sem-ects">5 ECTS</span></div>
+    <div class="sem-grid week3">
+      <div class="course"><div class="bar" style="background:#3b82f6"></div><div class="info"><div class="code" style="color:#3b82f6">42500</div><div class="name">Innovation in Engineering</div><div class="meta"><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">SPRING — YEAR 1 <span class="sem-ects">30 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">41418</div><div class="name">Green Fuels and Power-to-X</div><div class="meta"><span class="slot">Tue 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">34552</div><div class="name">Photovoltaic Systems</div><div class="meta"><span class="slot">Thu 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46755</div><div class="name">Renewables in Electricity Markets</div><div class="meta"><span class="slot">Mon 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46215</div><div class="name">Socio-technical Dimensions of Renewable Energy</div><div class="meta"><span class="slot">Mon 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46740</div><div class="name">Distributed Energy Technologies, Modelling and Control</div><div class="meta"><span class="slot">Thu 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46230</div><div class="name">Power System Balancing with Large Scale Wind Power</div><div class="meta"><span class="slot">Fri 8–12</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">FALL — YEAR 1 <span class="sem-ects">35 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">47330</div><div class="name">Energy Storage and Conversion</div><div class="meta"><span class="slot">Mon 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">46205</div><div class="name">Feasibility Studies of Energy Projects</div><div class="meta"><span class="slot">Tue 8–12</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">34540</div><div class="name">Light Emitting Diodes and Photovoltaics for Energy Applications</div><div class="meta"><span class="slot">Mon 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">10333</div><div class="name">Physics of Sustainable Energy</div><div class="meta"><span class="slot">Wed 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">28870</div><div class="name">Energy and Sustainability</div><div class="meta"><span class="slot">Tue 18–22</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#C0001B"></div><div class="info"><div class="code" style="color:#C0001B">42015</div><div class="name">Energy Economics</div><div class="meta"><span class="slot">Fri 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#8b5cf6"></div><div class="info"><div class="code" style="color:#8b5cf6">38102</div><div class="name">Technology Entrepreneurship</div><div class="meta"><span class="slot">Thu 13–17</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="sem">
+    <div class="sem-hdr">FALL — YEAR 2 (WITH THESIS) <span class="sem-ects">20 ECTS</span></div>
+    <div class="sem-grid week13">
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46300</div><div class="name">Wind Turbine Technology and Aerodynamics</div><div class="meta"><span class="slot">Mon 8–12</span><span>10 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#16a34a"></div><div class="info"><div class="code" style="color:#16a34a">46745</div><div class="name">Integration of Wind Power in the Power System</div><div class="meta"><span class="slot">Fri 13–17</span><span>5 ECTS</span></div></div></div>
+      <div class="course"><div class="bar" style="background:#3b82f6"></div><div class="info"><div class="code" style="color:#3b82f6">12105</div><div class="name">Quantitative Methods to Assess Sustainability</div><div class="meta"><span class="slot">Tue 18–22</span><span>5 ECTS</span></div></div></div>
+    </div>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#C0001B"></div>Core Mandatory</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div>Polytechnic</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div>Innovation II</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div>Programme Specific</div>
+  </div>
+  <div class="totals">Courses: <b>90 ECTS</b> · Thesis: <b>30 ECTS</b> · Total: <b>120 ECTS</b></div>
+</div>
+
+</div>
+</body>
+</html>

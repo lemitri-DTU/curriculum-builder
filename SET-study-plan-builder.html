@@ -1,0 +1,1837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DTU Study Plan Builder — MSc Sustainable Energy Technologies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red:#C0001B; --red-dk:#8a0014; --navy:#0f1923; --slate:#2c3e50;
+  --ink:#1a1a2e; --mist:#f4f2ee; --paper:#faf9f7; --white:#fff; --rule:#d8d4cc;
+  --mono:'IBM Plex Mono',monospace; --sans:'IBM Plex Sans',sans-serif;
+  --c-poly:#3b82f6; --c-poly-l:#dbeafe;
+  --c-inno:#8b5cf6; --c-inno-l:#ede9fe;
+  --c-mand:#C0001B; --c-mand-l:#fce8eb;
+  --c-digi:#0891b2; --c-digi-l:#cffafe;
+  --c-tech:#ea580c; --c-tech-l:#fff7ed;
+  --c-gen1:#16a34a; --c-gen1-l:#dcfce7;
+  --c-gen2:#65a30d; --c-gen2-l:#ecfccb;
+  --c-elec:#6b7280; --c-elec-l:#f3f4f6;
+  --c-rece:#9ca3af; --c-rece-l:#f9fafb;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--mist);color:var(--ink);min-height:100vh}
+
+/* Header */
+.hdr{background:var(--navy);color:#fff;border-left:6px solid var(--red)}
+.hdr-in{max-width:1100px;margin:0 auto;padding:28px 32px 24px 44px;display:flex;align-items:flex-end;gap:20px}
+.hdr-badge{background:var(--red);font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:2px;white-space:nowrap;margin-bottom:4px}
+.hdr h1{font-size:24px;font-weight:300;letter-spacing:-.02em}
+.hdr h1 b{font-weight:600}
+.hdr p{font-size:12px;color:rgba(255,255,255,.5);margin-top:4px}
+.main{max-width:1100px;margin:0 auto;padding:28px 32px 80px}
+
+/* Cards */
+.card{background:var(--white);border:1px solid var(--rule);border-radius:4px;overflow:hidden;margin-bottom:20px}
+.card-h{background:var(--paper);border-bottom:1px solid var(--rule);padding:12px 20px;display:flex;align-items:center;gap:10px}
+.card-h .step{background:var(--red);color:#fff;font-family:var(--mono);font-size:11px;font-weight:600;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.card-h h2{font-size:13px;font-weight:500;letter-spacing:.03em;text-transform:uppercase;color:var(--slate)}
+.card-b{padding:20px}
+
+/* Form */
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:600px){.fg{grid-template-columns:1fr}}
+.fl label{display:block;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:7px}
+.fl select,.fl input{width:100%;padding:10px 14px;font-family:var(--sans);font-size:14px;border:1px solid var(--rule);border-radius:3px;background:var(--paper);color:var(--ink);appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' fill='none' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;cursor:pointer}
+.fl select:focus,.fl input:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 3px rgba(192,0,27,.08)}
+.fl .hint{font-size:11px;color:#999;margin-top:5px;font-family:var(--mono)}
+
+/* Requirement bars */
+.req-row{display:flex;gap:2px;align-items:flex-end;flex-wrap:wrap;padding:8px 0}
+.req-col{display:flex;flex-direction:column;align-items:center;flex:1 1 0;min-width:72px}
+.req-num{font-size:10px;font-weight:600;margin-bottom:4px;font-family:var(--mono)}
+.req-bar{position:relative;width:100%;max-width:64px;border-radius:4px 4px 0 0;overflow:hidden}
+.req-fill{position:absolute;bottom:0;left:0;right:0;border-radius:0 0 0 0;transition:height .35s ease}
+.req-over{border:1px dashed;border-bottom:none;border-radius:4px 4px 0 0;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:600;font-family:var(--mono)}
+.req-lbl{font-size:9px;color:#666;margin-top:6px;text-align:center;line-height:1.2;max-width:76px;font-family:var(--mono)}
+.req-check{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-size:14px;font-weight:700;z-index:1}
+
+/* Legend */
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;padding:0 0 4px}
+.legend-item{display:flex;align-items:center;gap:5px}
+.legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.legend-txt{font-size:10px;color:#666;font-family:var(--mono)}
+
+/* Totals strip */
+.totals{display:flex;gap:16px;margin-top:8px;padding:10px 14px;background:var(--paper);border-radius:4px;font-size:12px;font-family:var(--mono);color:#555;flex-wrap:wrap}
+.totals b{color:var(--ink)}
+
+/* Warning banner */
+.warn-box{background:#fff3dc;border:1px solid #f0d090;border-radius:4px;padding:12px 18px;margin-bottom:20px}
+.warn-box div{font-size:13px;color:#8a5a00;margin-bottom:4px}
+.warn-box div:last-child{margin-bottom:0}
+
+/* Period buttons */
+.add-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.add-btn{padding:8px 14px;font-size:12px;font-weight:500;background:#fff;border:1px solid var(--rule);border-radius:3px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:.15s}
+.add-btn:hover{border-color:var(--red);color:var(--red)}
+.empty-msg{text-align:center;padding:36px 20px;color:#aaa;font-size:14px}
+
+/* Period card header */
+.per-hdr{background:var(--navy);color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
+.per-hdr .lbl{font-family:var(--mono);font-size:14px;font-weight:600}
+.per-hdr .ects-badge{background:rgba(255,255,255,.15);padding:2px 10px;border-radius:10px;font-size:11px;font-family:var(--mono);margin-left:12px}
+.per-hdr .ctrls{display:flex;gap:4px}
+.per-hdr .ctrls button{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:none;border-radius:3px;cursor:pointer;font-size:13px;font-weight:600;color:#fff;transition:.15s}
+.per-hdr .ctrls .mv{background:rgba(255,255,255,.1)}
+.per-hdr .ctrls .mv:hover{background:rgba(255,255,255,.25)}
+.per-hdr .ctrls .mv:disabled{background:rgba(255,255,255,.05);color:rgba(255,255,255,.2);cursor:not-allowed}
+.per-hdr .ctrls .rm{background:rgba(192,0,27,.3)}
+.per-hdr .ctrls .rm:hover{background:rgba(192,0,27,.6)}
+
+/* Calendar table */
+.cal{width:100%;border-collapse:separate;border-spacing:3px;min-width:620px;table-layout:fixed}
+.cal colgroup .col-time{width:80px}
+.cal colgroup .col-day{width:auto}
+.cal th{padding:6px 0;font-size:11px;font-weight:600;color:#666;text-transform:uppercase;font-family:var(--mono);background:var(--paper);border-radius:3px 3px 0 0;text-align:center;overflow:hidden}
+.cal th:first-child{text-align:left;padding-left:8px;background:none}
+.cal td.time-lbl{padding:4px 8px;font-size:11px;font-family:var(--mono);color:#888;vertical-align:top;padding-top:14px;width:80px}
+.cal td.na{background:#f5f4f0;border-radius:3px}
+
+/* ── Course block (the key visual) ── */
+.slot{padding:0;vertical-align:top;overflow:hidden}
+.slot-inner{border-radius:4px;min-height:76px;display:flex;position:relative;overflow:hidden;transition:all .15s}
+.slot-inner.empty{border:1px solid #eeece7;background:#fafafa}
+.slot-inner.filled{border:1px solid rgba(0,0,0,.08);background:#fff}
+
+/* Pool color bar on the left */
+.pool-bar{width:5px;flex-shrink:0;border-radius:4px 0 0 4px}
+.pool-bar.single{/* solid color via inline style */}
+.pool-bar.dual{/* 50/50 gradient via inline style */}
+.pool-bar.elective{background:var(--c-elec)}
+
+.slot-content{flex:1;padding:6px 8px;display:flex;flex-direction:column;gap:2px;min-width:0;overflow:hidden}
+.slot-code{font-size:11px;font-weight:600;font-family:var(--mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.slot-name{font-size:9px;color:#555;line-height:1.25;flex:1;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
+.slot-meta{display:flex;justify-content:space-between;align-items:center}
+.slot-ects{font-size:9px;font-family:var(--mono);color:#888}
+.slot-rm{font-size:10px;color:var(--red);background:none;border:none;cursor:pointer;padding:0 2px;font-weight:600}
+.slot-rm:hover{color:var(--red-dk)}
+
+/* Pool picker chips inside block */
+.pool-chips{display:flex;gap:2px;flex-wrap:wrap;margin-top:2px}
+.pool-chip{font-size:8px;padding:1px 5px;border-radius:2px;cursor:pointer;font-weight:600;font-family:var(--mono);border:1px solid;transition:.12s}
+.pool-chip.active{color:#fff}
+
+/* Overflow note — shown when course counts as elective due to pool being full */
+.overflow-note{font-size:7.5px;font-family:var(--mono);color:#8a5a00;background:#fff8ec;border:1px solid #f0d090;border-radius:2px;padding:1px 4px;margin-top:2px;line-height:1.3;max-width:100%}
+
+/* ── Custom dropdown — global fixed overlay ── */
+.slot-trigger{width:100%;height:100%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;color:#aaa;transition:.15s;border-radius:4px;min-height:76px}
+.slot-trigger:hover{background:#f0ede8;color:#666}
+#globalDD{position:fixed;z-index:9999;background:#fff;border:1px solid var(--rule);border-radius:6px;box-shadow:0 12px 36px rgba(0,0,0,.18);max-height:400px;display:none;width:380px;overflow:hidden;display:flex;flex-direction:column}
+#globalDD.open{display:flex}
+.dd-search{padding:8px 10px;border-bottom:1px solid var(--rule);position:sticky;top:0;background:#fff;z-index:1}
+.dd-search input{width:100%;padding:6px 10px;font-size:12px;font-family:var(--sans);border:1px solid var(--rule);border-radius:4px;background:var(--paper);outline:none}
+.dd-search input:focus{border-color:var(--red);box-shadow:0 0 0 2px rgba(192,0,27,.08)}
+.dd-list{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;flex:1}
+.dd-opt{display:flex;align-items:stretch;cursor:pointer;transition:background .1s;border-bottom:1px solid #f5f3ef}
+.dd-opt:last-child{border-bottom:none}
+.dd-opt:hover{background:#f8f7f4}
+.dd-opt.disabled{opacity:.45;cursor:not-allowed;pointer-events:none}
+.dd-opt .dd-bar{width:5px;flex-shrink:0}
+.dd-opt .dd-info{flex:1;padding:7px 10px;min-width:0}
+.dd-opt .dd-code{font-size:11px;font-weight:600;font-family:var(--mono)}
+.dd-opt .dd-name{font-size:10px;color:#666;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dd-opt .dd-ects{font-size:9px;color:#999;font-family:var(--mono)}
+.dd-opt .dd-pools{display:flex;gap:3px;margin-top:2px}
+.dd-opt .dd-pool-tag{font-size:8px;padding:1px 5px;border-radius:2px;font-family:var(--mono);font-weight:500;border:1px solid}
+.dd-sep{padding:5px 10px;font-size:10px;font-weight:600;color:#aaa;text-transform:uppercase;letter-spacing:.08em;background:#faf9f7;border-bottom:1px solid #f0ede8}
+
+/* 3-week grid */
+.three-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:3px}
+.three-hdr{text-align:center;padding:6px 0;font-size:11px;font-weight:600;color:#666;text-transform:uppercase;font-family:var(--mono);background:var(--paper);border-radius:3px 3px 0 0}
+.three-cell{border-radius:4px;padding:0;min-height:80px;display:flex;overflow:hidden;position:relative}
+.three-cell.empty{border:2px dashed #e0ddd8;align-items:center;justify-content:center}
+.three-cell.filled{border:1px solid rgba(0,0,0,.08)}
+.three-cell .pool-bar{border-radius:4px 0 0 4px;width:5px}
+.three-cell .slot-content{flex:1;padding:10px 8px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-width:0;overflow:hidden}
+.three-select{margin-top:12px;display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap}
+
+/* Custom course input modal */
+.cmodal-overlay{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center}
+.cmodal{background:#fff;border-radius:6px;box-shadow:0 16px 48px rgba(0,0,0,.2);width:360px;max-width:90vw;padding:24px}
+.cmodal-title{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:16px}
+.cmodal-field{margin-bottom:14px}
+.cmodal-field label{display:block;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);margin-bottom:5px}
+.cmodal-field input,.cmodal-field select{width:100%;padding:9px 12px;font-family:var(--sans);font-size:13px;border:1px solid var(--rule);border-radius:3px;background:var(--paper);color:var(--ink)}
+.cmodal-field input:focus,.cmodal-field select:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 3px rgba(192,0,27,.08)}
+.cmodal-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
+.cmodal-cancel{padding:8px 16px;font-size:12px;font-weight:500;background:#fff;border:1px solid var(--rule);border-radius:3px;cursor:pointer;color:var(--slate);font-family:var(--sans)}
+.cmodal-cancel:hover{border-color:#999}
+.cmodal-ok{padding:8px 20px;font-size:12px;font-weight:600;background:var(--navy);color:#fff;border:none;border-radius:3px;cursor:pointer;font-family:var(--sans)}
+.cmodal-ok:hover{background:#1a2f42}
+
+/* Responsive */
+@media(max-width:700px){.hdr-in{flex-direction:column;align-items:flex-start;gap:8px}}
+
+/* Save button */
+.save-btn{display:inline-flex;align-items:center;gap:10px;padding:12px 24px;font-size:14px;font-weight:600;font-family:var(--sans);letter-spacing:.03em;background:var(--navy);color:#fff;border:none;border-radius:3px;cursor:pointer;transition:.15s}
+.save-btn:hover{background:#1a2f42}
+.save-btn:active{transform:translateY(1px)}
+
+/* Print-only elements — hidden on screen */
+.print-only{display:none}
+
+/* ── PRINT STYLESHEET ── */
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}
+  body{background:#fff!important;font-size:10px}
+  .hdr,#setupCard,#saveSection,#periodSetup,.add-btns,.empty-msg,#warnBox,.slot-trigger,.slot-rm,.pool-chips,.per-hdr .ctrls,#globalDD,#customModal{display:none!important}
+
+  /* Show print header */
+  .print-only{display:block!important}
+  .print-title-row{display:flex;align-items:center;gap:14px;margin-bottom:4px}
+  .print-badge{background:var(--red);color:#fff;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 9px;border-radius:2px;display:inline-block}
+  .print-title{font-size:18px;font-weight:600;color:var(--ink)}
+  .print-meta{font-size:11px;font-family:var(--mono);color:#555;margin-top:2px;padding-bottom:10px;border-bottom:2px solid var(--red);margin-bottom:16px}
+
+  /* Main layout */
+  .main{padding:0!important;max-width:100%}
+
+  /* Cards */
+  .card{border:none!important;box-shadow:none!important;margin-bottom:12px!important;break-inside:avoid}
+  .card-h{background:#f8f7f4!important;padding:8px 14px!important;border-bottom:1px solid #ddd!important}
+  .card-b{padding:12px 0!important}
+
+  /* Requirements — keep compact */
+  #reqCard .card-b{padding:8px 0!important}
+  .req-num{font-size:9px!important}
+  .req-lbl{font-size:8px!important}
+  .req-bar{max-width:50px!important}
+
+  /* Period cards */
+  .per-hdr{padding:8px 14px!important;break-after:avoid}
+  .per-hdr .lbl{font-size:12px!important}
+  .per-hdr .ects-badge{font-size:9px!important}
+
+  /* Calendar table */
+  .cal{min-width:0!important;border-spacing:2px!important}
+  .cal th{font-size:9px!important;padding:4px 0!important}
+  .cal td.time-lbl{font-size:8px!important;padding:2px 4px!important}
+  .slot-inner{min-height:auto!important;border-width:1px!important}
+  .slot-code{font-size:9px!important}
+  .slot-name{font-size:7px!important}
+  .slot-ects{font-size:7px!important}
+  .slot-meta{margin-top:0!important}
+  .pool-bar{width:4px!important}
+
+  /* 3-week */
+  .three-grid{gap:2px!important}
+  .three-cell{min-height:50px!important}
+  .overflow-note{font-size:7px!important;margin-top:1px!important}
+
+  /* Page setup */
+  @page{size:A4 landscape;margin:12mm 10mm}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr"><div class="hdr-in">
+  <span class="hdr-badge">DTU</span>
+  <div><h1><b>Study Plan</b> Builder</h1><p>MSc in Sustainable Energy Technologies — Interactive semester planner</p></div>
+</div></div>
+
+<div class="main">
+  <!-- Step 1 -->
+  <div class="card" id="setupCard"><div class="card-h"><span class="step">1</span><h2>Programme Setup</h2></div>
+  <div class="card-b"><div class="fg">
+    <div class="fl"><label>Specialization</label>
+      <select id="specSel" onchange="onSpecChange()">
+        <option value="">— Select —</option>
+        <option value="General">General (no specialization)</option>
+        <option value="Bio-based Fuels">Bio-based Fuels</option>
+        <option value="Chemical Energy Conversion and Storage">Chemical Energy Conversion and Storage</option>
+        <option value="Solar Energy">Solar Energy</option>
+        <option value="Thermal Energy Conversion and Storage">Thermal Energy Conversion and Storage</option>
+        <option value="Wind Energy">Wind Energy</option>
+      </select></div>
+    <div class="fl"><label>Curriculum Year</label>
+      <select id="yearSel" onchange="onYearChange()"><option value="2025">2025 / 2026</option></select>
+      <div class="hint">Currently only the 2025 curriculum is supported</div></div>
+  </div></div></div>
+
+  <!-- Step 2 — Requirements (rendered dynamically) -->
+  <div id="reqCard" style="display:none"></div>
+
+  <!-- Warnings -->
+  <div id="warnBox" class="warn-box" style="display:none"></div>
+
+  <!-- Step 3 — Periods -->
+  <div id="periodSetup" style="display:none" class="card"><div class="card-h"><span class="step">3</span><h2>Course Periods</h2></div>
+  <div class="card-b">
+    <div class="add-btns" id="addBtns"></div>
+    <div class="empty-msg" id="emptyMsg">Add your first course period above to start building your study plan</div>
+  </div></div>
+
+  <!-- Period cards -->
+  <div id="periodsContainer"></div>
+
+  <!-- Save / Print section -->
+  <div id="saveSection" style="display:none" class="card">
+    <div class="card-h"><span class="step">4</span><h2>Save Study Plan</h2></div>
+    <div class="card-b">
+      <div class="fg" style="margin-bottom:16px">
+        <div class="fl"><label>Student Name (optional)</label>
+          <input type="text" id="studentName" placeholder="e.g. Anna Jensen" style="background-image:none;padding-right:14px">
+        </div>
+        <div class="fl"><label>Date</label>
+          <input type="text" id="planDate" readonly style="background-image:none;padding-right:14px;color:#888">
+        </div>
+      </div>
+      <button class="save-btn" onclick="savePDF()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Save as PDF (Print)
+      </button>
+      <div class="hint" style="margin-top:8px">Opens the browser print dialog — choose "Save as PDF" as the destination</div>
+    </div>
+  </div>
+
+  <!-- Print-only header (hidden on screen) -->
+  <div id="printHeader" class="print-only">
+    <div class="print-title-row">
+      <div>
+        <div class="print-badge">DTU</div>
+        <div class="print-title">Study Plan — MSc Sustainable Energy Technologies</div>
+      </div>
+    </div>
+    <div class="print-meta" id="printMeta"></div>
+  </div>
+</div>
+
+<!-- Global dropdown overlay -->
+<div id="globalDD"></div>
+
+<!-- Custom course input modal -->
+<div id="customModal" class="cmodal-overlay" style="display:none" onclick="if(event.target===this)closeCustomModal()">
+  <div class="cmodal">
+    <div class="cmodal-title" id="cmodalTitle">Add Elective Course</div>
+    <div class="cmodal-field">
+      <label>Course Name</label>
+      <input type="text" id="cmodalName" placeholder="e.g. Advanced Thermodynamics">
+    </div>
+    <div class="cmodal-field">
+      <label>ECTS</label>
+      <input type="number" id="cmodalEcts" placeholder="e.g. 5" min="0" max="100" step="any">
+    </div>
+    <div class="cmodal-btns">
+      <button class="cmodal-cancel" onclick="closeCustomModal()">Cancel</button>
+      <button class="cmodal-ok" onclick="confirmCustomCourse()">Add Course</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// DATA — MSc Sustainable Energy Technologies
+// ═══════════════════════════════════════════════════════════════
+const COURSES={
+// ── Polytechnic Foundation ──
+'12100':{name:'Quantitative Methods to Assess Sustainability',ects:5,slots:[{period:'spring',day:'Tue',time:'evening'}]},
+'12101':{name:'Quantitative Methods to Assess Sustainability',ects:5,slots:[{period:'spring',day:'Fri',time:'pm'}]},
+'12105':{name:'Quantitative Methods to Assess Sustainability',ects:5,slots:[{period:'fall',day:'Tue',time:'evening'}]},
+'12106':{name:'Quantitative Methods to Assess Sustainability',ects:5,slots:[{period:'fall',day:'Fri',time:'pm'}]},
+'42500':{name:'Innovation in Engineering',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'42501':{name:'Innovation in Engineering',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'42502':{name:'Facilitating Innovation in Multidisciplinary Teams',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'42503':{name:'Facilitating Innovation in Multidisciplinary Teams',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'42504':{name:'Innovation in Engineering',ects:5,slots:[{period:'august',day:'all',time:'all'}]},
+'42505':{name:'Facilitating Innovation in Multidisciplinary Teams',ects:5,slots:[{period:'august',day:'all',time:'all'}]},
+'41636':{name:'Design for Circular Economy',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+// ── Innovation II options ──
+'28485':{name:'Biobusiness and Process Innovation',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'34541':{name:'Entrepreneurship in Photonics and Communications',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'38102':{name:'Technology Entrepreneurship',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+// ── Core Mandatory (shared across specializations) ──
+'28870':{name:'Energy and Sustainability',ects:5,slots:[{period:'fall',day:'Tue',time:'evening'}]},
+'42015':{name:'Energy Economics',ects:5,slots:[{period:'fall',day:'Fri',time:'pm'}]},
+'46205':{name:'Feasibility Studies of Energy Projects',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+// ── Bio-based Fuels courses ──
+'28345':{name:'Industrial BioReaction Engineering',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'28872':{name:'Biorefinery',ects:5,slots:[{period:'fall',day:'Fri',time:'am'}]},
+'10339':{name:'Concepts in Heterogeneous Catalysis and Applications to Energy Conversion',ects:5,slots:[{period:'fall',day:'Fri',time:'pm'}]},
+'26510':{name:'Catalysis and Sustainable Chemistry',ects:10,slots:[{period:'spring',day:'Tue',time:'pm'},{period:'spring',day:'Fri',time:'am'}]},
+'28242':{name:'Chemical Kinetics and Catalysis',ects:5,slots:[{period:'fall',day:'Mon',time:'am'}]},
+'28244':{name:'Combustion and High Temperature Processes',ects:5,slots:[{period:'fall',day:'Fri',time:'am'}]},
+'28271':{name:'Thermal Gasification, Pyrolysis and Sustainability',ects:5,slots:[{period:'august',day:'all',time:'all'}]},
+'28350':{name:'Process Design: Principles and Methods',ects:10,slots:[{period:'spring',day:'Tue',time:'am'},{period:'spring',day:'Fri',time:'pm'}]},
+'28871':{name:'Production of Biofuels',ects:10,slots:[{period:'spring',day:'Mon',time:'pm'},{period:'spring',day:'Fri',time:'am'}]},
+// ── Chemical Energy courses ──
+'47305':{name:'Electrochemistry',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'47319':{name:'Functional Materials',ects:5,slots:[{period:'spring',day:'Mon',time:'am'}]},
+'47330':{name:'Energy Storage and Conversion',ects:5,slots:[{period:'fall',day:'Mon',time:'am'}]},
+'47301':{name:'Hydrogen Energy and Fuel Cells',ects:5,slots:[{period:'spring',day:'Thu',time:'pm'}]},
+'47302':{name:'Hydrogen and Fuel Cell Chemistry — Experimental Course',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'47310':{name:'Battery Materials and Chemistries',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'47317':{name:'Exergy Analysis',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'47332':{name:'AI-orchestrated Self-driving Labs',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'47333':{name:'Electron Microscopy for Materials Science',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'47335':{name:'Atomic-scale Modelling of Energy Materials (Online)',ects:5,slots:[{period:'spring',day:'Fri',time:'am'}]},
+'47336':{name:'Applications of X-ray and Neutron Scattering',ects:5,slots:[{period:'august',day:'all',time:'all'}]},
+'47338':{name:'Organic Energy Materials',ects:5,slots:[{period:'fall',day:'Wed',time:'am'}]},
+'47341':{name:'AI4Materials: AI for Accelerated Materials Design',ects:10,slots:[{period:'fall',day:'Wed',time:'am'},{period:'fall',day:'Wed',time:'pm'}]},
+'47514':{name:'PhD Course in Advanced Electrochemistry',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'10304':{name:'Experimental Surface Physics',ects:10,slots:[{period:'spring',day:'Tue',time:'am'},{period:'spring',day:'Fri',time:'pm'}]},
+'10333':{name:'Physics of Sustainable Energy',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+// ── Solar Energy courses ──
+'34552':{name:'Photovoltaic Systems',ects:5,slots:[{period:'spring',day:'Thu',time:'am'}]},
+'34540':{name:'Light Emitting Diodes and Photovoltaics for Energy Applications',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'34551':{name:'Thin Film Photovoltaics',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'34553':{name:'Applied Photovoltaics',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'34554':{name:'Design of Ground Mounted Photovoltaic Power Plants',ects:5,slots:[{period:'fall',day:'Tue',time:'evening'}]},
+'10850':{name:'Micro- and Nanofabrication for Quantum Engineering',ects:5,slots:[{period:'spring',day:'Fri',time:'pm'}]},
+'10871':{name:'Advanced Design and Simulation of Solar Cells',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'34620':{name:'Basic Power Electronics in Energy Systems',ects:5,slots:[{period:'spring',day:'Thu',time:'pm'}]},
+'41461':{name:'Building Integrated Photovoltaics',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'41469':{name:'Solar Resource Assessment and Forecasting',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'41464':{name:'Solar Heating Systems',ects:10,slots:[{period:'spring',day:'Tue',time:'am'},{period:'spring',day:'Fri',time:'pm'}]},
+// ── Thermal Energy courses ──
+'41416':{name:'Energy Systems — Analysis, Design and Optimization',ects:10,slots:[{period:'spring',day:'Wed',time:'am'},{period:'spring',day:'Wed',time:'pm'}]},
+'41417':{name:'Digitalization of Thermal Energy Technologies',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'41418':{name:'Green Fuels and Power-to-X',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'41419':{name:'Advanced Industrial Thermal Energy Storage',ects:5,slots:[{period:'fall',day:'Mon',time:'am'}]},
+'41420':{name:'Refrigeration and Heat Pump Technology',ects:10,slots:[{period:'fall',day:'Wed',time:'am'},{period:'fall',day:'Wed',time:'pm'}]},
+'41468':{name:'Sustainable District Heating',ects:5,slots:[{period:'spring',day:'Mon',time:'am'}]},
+'41317':{name:'Computational Fluid Dynamics',ects:5,slots:[{period:'spring',day:'Fri',time:'pm'}]},
+'41320':{name:'Advanced Fluid Mechanics',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'41343':{name:'Fuels and Emissions from Current and Future Transportation',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'41346':{name:'Internal Combustion Engines — Experimental Methods and Data Processing',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+// ── Wind Energy courses ──
+'46200':{name:'Planning and Development of Wind Farms',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'46300':{name:'Wind Turbine Technology and Aerodynamics',ects:10,slots:[{period:'fall',day:'Mon',time:'am'},{period:'fall',day:'Thu',time:'pm'}]},
+'46100':{name:'Introduction to Micrometeorology for Wind Energy',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'46120':{name:'Scientific Programming for Wind Energy',ects:5,slots:[{period:'spring',day:'Thu',time:'am'}]},
+'46211':{name:'Offshore Wind Energy',ects:10,slots:[{period:'fall',day:'Tue',time:'pm'},{period:'fall',day:'Fri',time:'am'}]},
+'46215':{name:'Socio-technical Dimensions of Renewable Energy',ects:5,slots:[{period:'spring',day:'Mon',time:'am'}]},
+'46230':{name:'Power System Balancing with Large Scale Wind Power',ects:5,slots:[{period:'spring',day:'Fri',time:'am'}]},
+'46310':{name:'Wind Turbine Aeroelasticity',ects:10,slots:[{period:'spring',day:'Wed',time:'am'},{period:'spring',day:'Wed',time:'pm'}]},
+'46320':{name:'Loads, Aerodynamics and Control of Wind Turbines',ects:10,slots:[{period:'fall',day:'Wed',time:'am'},{period:'fall',day:'Wed',time:'pm'}]},
+'46400':{name:'Wind Turbine Measurement Technique',ects:10,slots:[{period:'spring',day:'Mon',time:'am'},{period:'spring',day:'Thu',time:'pm'}]},
+'46500':{name:'Probabilistic Methods in Wind Energy',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'46550':{name:'Offshore Wind Grid Connection and HVDC Transmission',ects:5,slots:[{period:'fall',day:'Fri',time:'am'}]},
+'46600':{name:'Aeroacoustics',ects:5,slots:[{period:'spring',day:'Thu',time:'pm'}]},
+'46700':{name:'Introduction to Electric Power Systems',ects:10,slots:[{period:'fall',day:'Tue',time:'pm'},{period:'fall',day:'Fri',time:'am'}]},
+'46725':{name:'Electrical Machines',ects:5,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+'46735':{name:'Wind, Solar and Energy Storage Electrical Drive Trains',ects:10,slots:[{period:'fall',day:'Mon',time:'pm'},{period:'fall',day:'Thu',time:'am'}]},
+'46740':{name:'Distributed Energy Technologies, Modelling and Control',ects:5,slots:[{period:'spring',day:'Thu',time:'pm'}]},
+'46745':{name:'Integration of Wind Power in the Power System',ects:5,slots:[{period:'fall',day:'Fri',time:'pm'}]},
+'46755':{name:'Renewables in Electricity Markets',ects:5,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+// ── Other DTU MSc Electives ──
+'01238':{name:'Differential Geometry',ects:5,slots:[{period:'spring',day:'Thu',time:'am'}]},
+'01257':{name:'Advanced Modelling - Applied Mathematics',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'01325':{name:'Mathematics 4: Analysis - a Toolbox in Physics and Engineering',ects:5,slots:[{period:'spring',day:'Mon',time:'am'}]},
+'01405':{name:'Algebraic Error-Correcting Codes',ects:5,slots:[{period:'spring',day:'Fri',time:'am'}]},
+'01415':{name:'Computational Discrete Mathematics',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'01425':{name:'Advanced Cryptography',ects:5,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'01426':{name:'Research Topics in Cryptography',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'01617':{name:'Introduction to Dynamical Systems',ects:5,slots:[{period:'fall',day:'Fri',time:'pm'}]},
+'01621':{name:'Perturbation theory for differential equations',ects:5,slots:[{period:'spring',day:'Mon',time:'am'}]},
+'01622':{name:'Advanced Dynamical Systems: Applications in Science and Engineering',ects:5,slots:[{period:'spring',day:'Fri',time:'pm'}]},
+'01715':{name:'Functional Analysis',ects:5,slots:[{period:'fall',day:'Fri',time:'am'}]},
+'01716':{name:'Advanced Partial Differential Equations: Theory and Applications',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'02162':{name:'Software Engineering 2',ects:10,slots:[{period:'fall',day:'Tue',time:'am'},{period:'fall',day:'Fri',time:'pm'}]},
+'02180':{name:'Introduction to Artificial Intelligence',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'02195':{name:'Quantum Algorithms and Machine Learning',ects:5,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+'02196':{name:'Quantum Compilers',ects:5,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'02201':{name:'Agile Hardware Design',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'02203':{name:'Design of Digital Systems',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'02205':{name:'VLSI Design',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'02207':{name:'Verification of Digital Systems',ects:5,slots:[{period:'fall',day:'Mon',time:'am'}]},
+'02209':{name:'Test of Digital Systems',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'02211':{name:'Research Topics in Computer Architecture',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'02214':{name:'Hardware/Software Codesign',ects:5,slots:[{period:'spring',day:'Thu',time:'pm'}]},
+'02225':{name:'Distributed Real-Time Systems',ects:5,slots:[{period:'spring',day:'Fri',time:'am'}]},
+'02226':{name:'Networked Embedded Systems',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'02231':{name:'Cryptography Fundamentals',ects:5,slots:[{period:'fall',day:'Mon',time:'am'}]},
+'02232':{name:'Applied Cryptography',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'},{period:'spring',day:'Thu',time:'pm'}]},
+'02234':{name:'Research Topics in Cybersecurity',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'02242':{name:'Program Analysis',ects:7.5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'02244':{name:'Logic for Security',ects:7.5,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+'02245':{name:'Program Verification',ects:7.5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'02246':{name:'Model Checking',ects:7.5,slots:[{period:'fall',day:'Fri',time:'am'}]},
+'02247':{name:'Compiler Construction',ects:5,slots:[{period:'spring',day:'Thu',time:'am'}]},
+'02249':{name:'Computationally Hard Problems',ects:7.5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'02256':{name:'Automated Reasoning',ects:5,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'02258':{name:'Parallel Computer Systems',ects:5,slots:[{period:'fall',day:'Wed',time:'am'}]},
+'02262':{name:'Formal Aspects of Process Science',ects:5,slots:[{period:'fall',day:'Mon',time:'am'}]},
+'02266':{name:'User Experience Engineering',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'02267':{name:'Software Development of Web Services',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'02268':{name:'Process-oriented and Event-driven Software Systems',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'02269':{name:'Process Mining',ects:5,slots:[{period:'fall',day:'Wed',time:'am'}]},
+'02270':{name:'Cybersecurity Fundamentals',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'02271':{name:'Advanced Cybersecurity',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'02275':{name:'Ethical Hacking',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'02276':{name:'Usable Security and Privacy',ects:5,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'02277':{name:'Cyber Risk Management and Incident Response',ects:5,slots:[{period:'spring',day:'Fri',time:'pm'}]},
+'02278':{name:'Post-Quantum Cryptography',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'02282':{name:'Algorithms for Massive Data Sets',ects:7.5,slots:[{period:'spring',day:'Mon',time:'am'}]},
+'02285':{name:'Artificial Intelligence and Multi-Agent Systems',ects:7.5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'02287':{name:'Logical Theories for Uncertainty and Learning',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'02289':{name:'Algorithmic Techniques for Modern Data Models',ects:5,slots:[{period:'fall',day:'Fri',time:'am'}]},
+'02291':{name:'System Integration',ects:5,slots:[{period:'spring',day:'Wed',time:'am'}]},
+'02407':{name:'Stochastic Processes - Probability 2',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'02409':{name:'Multivariate Statistics',ects:5,slots:[{period:'fall',day:'Mon',time:'am'}]},
+'02411':{name:'Statistical Design and Analysis of Experiments',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'},{period:'spring',day:'Mon',time:'am'}]},
+'02417':{name:'Time Series Analysis',ects:5,slots:[{period:'spring',day:'Fri',time:'am'}]},
+'02421':{name:'Stochastic Adaptive Control',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'02425':{name:'Diffusions and stochastic differential equations',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'02426':{name:'Non-linear random effect models: time-independent and dynamic models',ects:5,slots:[{period:'spring',day:'Fri',time:'am'}]},
+'02427':{name:'Advanced Time Series Analysis',ects:10,slots:[{period:'fall',day:'Wed',time:'am'},{period:'fall',day:'Wed',time:'pm'}]},
+'02428':{name:'Dynamic Optimization',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'02429':{name:'Analysis of correlated data: Mixed linear models',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'02431':{name:'Risk Management',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'02435':{name:'Decision-Making Under Uncertainty',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'02441':{name:'Applied Statistics and Statistical Software',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'02443':{name:'Stochastic Simulation',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'02452':{name:'Machine Learning',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'02455':{name:'Experiment in Cognitive Science',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'02456':{name:'Deep learning',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'02458':{name:'Cognitive Modelling',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'02460':{name:'Advanced Machine Learning',ects:5,slots:[{period:'spring',day:'Thu',time:'pm'}]},
+'02471':{name:'Machine learning for signal processing',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'02476':{name:'Machine Learning Operations',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'02477':{name:'Bayesian machine learning',ects:5,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+'02492':{name:'Digital Learning Technology and Entrepreneurship',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'02501':{name:'Advanced Deep Learning in Computer Vision',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'02504':{name:'Computer Vision',ects:5,slots:[{period:'spring',day:'Fri',time:'pm'}]},
+'02506':{name:'Advanced Image Analysis',ects:5,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'02510':{name:'Deep learning and data engineering for image analysis',ects:5,slots:[{period:'spring',day:'Wed',time:'am'}]},
+'02515':{name:'Image analysis',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'02516':{name:'Introduction to Deep Learning in Computer Vision',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'02517':{name:'Responsible AI: Algorithmic fairness and explainability',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'02518':{name:'Computational 3D Imaging and Analysis',ects:5,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'02561':{name:'Computer Graphics',ects:5,slots:[{period:'fall',day:'Wed',time:'am'}]},
+'02562':{name:'Rendering - Introduction',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'02563':{name:'Generative Methods for Computer Graphics',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'02566':{name:'Creating Digital Visual Experiences',ects:10,slots:[{period:'spring',day:'Mon',time:'pm'},{period:'spring',day:'Thu',time:'am'}]},
+'02581':{name:'Geometric Data Analysis and Processing',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'02582':{name:'Computational Data Analysis',ects:5,slots:[{period:'spring',day:'Thu',time:'am'}]},
+'02586':{name:'Statistical Genetics',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'02611':{name:'Optimization for Data Science',ects:5,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'02612':{name:'Constrained Optimization',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'02613':{name:'Python and High-Performance Computing',ects:5,slots:[{period:'spring',day:'Wed',time:'am'}]},
+'02614':{name:'High-Performance Computing',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'02616':{name:'Large-scale Modelling',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'02619':{name:'Model Predictive Control',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'02623':{name:'The Finite Element Method for Partial Differential Equations',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'02624':{name:'Inverse problems and Imaging',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'02686':{name:'Scientific computing for differential equations',ects:5,slots:[{period:'spring',day:'Thu',time:'pm'}]},
+'02687':{name:'Scientific Computing for ordinary and partial differential equations',ects:5,slots:[{period:'spring',day:'Mon',time:'am'}]},
+'02689':{name:'Advanced Numerical Methods for Differential Equations',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'02805':{name:'Social graphs and interactions',ects:10,slots:[{period:'fall',day:'Wed',time:'am'},{period:'fall',day:'Wed',time:'pm'}]},
+'02806':{name:'Social data analysis and visualization',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'02807':{name:'Computational Tools for Data Science',ects:5,slots:[{period:'fall',day:'Tue',time:'evening'},{period:'spring',day:'Tue',time:'evening'}]},
+'02808':{name:'Personal Data Interaction for Mobile and Wearables',ects:10,slots:[{period:'spring',day:'Wed',time:'am'},{period:'spring',day:'Wed',time:'pm'}]},
+'02810':{name:'UX Design Prototyping',ects:5,slots:[{period:'fall',day:'Mon',time:'am'}]},
+'02830':{name:'Advanced Project in Digital Media Engineering',ects:10,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'10112':{name:'Advanced Quantum Mechanics',ects:10,slots:[{period:'fall',day:'Mon',time:'pm'},{period:'fall',day:'Thu',time:'am'}]},
+'10122':{name:'Statistical Physics',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'10200':{name:'The structure and dynamics of materials studied with X-rays and neutrons',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'10255':{name:'Advanced 3D X-ray imaging',ects:5,slots:[{period:'fall',day:'Mon',time:'am'}]},
+'10302':{name:'Electronic Structure Methods in Material Physics, Chemistry and Biology',ects:10,slots:[{period:'spring',day:'Wed',time:'am'},{period:'spring',day:'Wed',time:'pm'}]},
+'10306':{name:'Theory of 2D materials and Strong Light-Matter Interaction',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'10314':{name:'Magnetism and Magnetic Materials',ects:5,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'10315':{name:'Magnetism and Magnetic Materials - with project',ects:10,slots:[{period:'spring',day:'Wed',time:'pm'},{period:'spring',day:'Wed',time:'am'}]},
+'10316':{name:'Materials design with machine learning and artificial intelligence',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'10319':{name:'Advanced solid state physics',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'10321':{name:'Nanosystems engineering',ects:10,slots:[{period:'fall',day:'Mon',time:'am'},{period:'fall',day:'Thu',time:'pm'}]},
+'10325':{name:'Quantum mechanical modelling of nanoelectronics',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'10337':{name:'Theoretical microfluidics',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'10346':{name:'Advanced Continuum Physics',ects:5,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+'10350':{name:'Numerical studies in physics',ects:5,slots:[{period:'august',day:'all',time:'all'}]},
+'10380':{name:'Quantum Optics',ects:10,slots:[{period:'spring',day:'Tue',time:'pm'},{period:'spring',day:'Fri',time:'am'}]},
+'10384':{name:'Quantum information',ects:5,slots:[{period:'fall',day:'Fri',time:'am'}]},
+'10385':{name:'Quantum Information Technology',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'10386':{name:'Experimental Techniques in Quantum Technology',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'10387':{name:'Scientific computing in quantum information science',ects:5,slots:[{period:'august',day:'all',time:'all'}]},
+'10400':{name:'Plasma Physics',ects:5,slots:[{period:'fall',day:'Wed',time:'am'}]},
+'10401':{name:'Experimental plasma physics',ects:5,slots:[{period:'spring',day:'Thu',time:'am'}]},
+'10405':{name:'Theory of Relativity',ects:5,slots:[{period:'fall',day:'Mon',time:'am'}]},
+'10411':{name:'Nuclear reactor physics',ects:5,slots:[{period:'spring',day:'Fri',time:'am'}]},
+'10413':{name:'Defects in solids',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'10414':{name:'Neutronics Monte-Carlo simulation of nuclear reactors',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'10603':{name:'Knowledge cultures – history and philosophy of knowledge in theory and practice',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'10605':{name:'History of Technology',ects:5,slots:[{period:'fall',day:'Wed',time:'am'}]},
+'10610':{name:'History of Technology',ects:10,slots:[{period:'fall',day:'Wed',time:'am'},{period:'fall',day:'Wed',time:'pm'}]},
+'10730':{name:'Research Immersion MSc (June) - Department of Physics',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'10732':{name:'Research Immersion MSc (August) - Department of Physics',ects:5,slots:[{period:'august',day:'all',time:'all'}]},
+'10750':{name:'Innovation Projects at the Physics Department',ects:5,slots:[{period:'fall',day:'Fri',time:'pm'}]},
+'10851':{name:'Introduction to cleanroom-based microfabrication',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'10852':{name:'Introduction to cleanroom-based microfabrication',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'10855':{name:'Advanced fabrication of micro- and nanostructures',ects:10,slots:[{period:'fall',day:'Mon',time:'pm'},{period:'fall',day:'Thu',time:'am'},{period:'fall',day:'Wed',time:'am'},{period:'fall',day:'Wed',time:'pm'}]},
+'10862':{name:'Polymer micro fabrication',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'10863':{name:'Two-photon 3D & 4D printing and characterisation of polymer microstructures E',ects:10,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'10864':{name:'Two-photon 3D & 4D printing and characterisation of polymer microstructures F',ects:10,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'12104':{name:'Environmental Modelling',ects:10,slots:[{period:'fall',day:'Tue',time:'am'},{period:'fall',day:'Fri',time:'pm'}]},
+'12109':{name:'Physico-Chemical Water Treatment Technologies',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'12111':{name:'Environmental Processes for MSc students',ects:5,slots:[{period:'fall',day:'Wed',time:'am'},{period:'fall',day:'Wed',time:'pm'}]},
+'12115':{name:'Wastewater treatment and valorization',ects:10,slots:[{period:'spring',day:'Wed',time:'am'},{period:'spring',day:'Wed',time:'pm'}]},
+'12121':{name:'Water Supply',ects:10,slots:[{period:'spring',day:'Mon',time:'pm'},{period:'spring',day:'Thu',time:'am'}]},
+'12122':{name:'Urban Drainage and Stormwater Management',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'12125':{name:'Design and planning of climate adaptation measures in the built environment',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'12130':{name:'Solid Waste Technology and Management',ects:10,slots:[{period:'fall',day:'Tue',time:'pm'},{period:'fall',day:'Fri',time:'am'}]},
+'12132':{name:'LCA Modelling of Waste Management Systems',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'12145':{name:'Terrestrial Ecology for Engineers',ects:5,slots:[{period:'fall',day:'Fri',time:'am'}]},
+'12150':{name:'Radioactivity in the environment',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'12227':{name:'Regional and global air pollution effects',ects:5,slots:[{period:'spring',day:'Thu',time:'am'}]},
+'12228':{name:'Urban air pollution',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'12231':{name:'Applied Analytical Environmental Chemistry',ects:5,slots:[{period:'august',day:'all',time:'all'}]},
+'12237':{name:'Chemicals in the environment',ects:10,slots:[{period:'spring',day:'Mon',time:'am'},{period:'spring',day:'Thu',time:'pm'}]},
+'12238':{name:'Priority Organic Pollutants - Transport, Distribution and Transformation',ects:5,slots:[{period:'spring',day:'Fri',time:'am'}]},
+'12240':{name:'Environmental Management, innovation and Ethics',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'12245':{name:'Water Pollution',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'12330':{name:'Contaminated Sites',ects:10,slots:[{period:'spring',day:'Tue',time:'am'},{period:'spring',day:'Fri',time:'pm'}]},
+'12331':{name:'Field investigations of contaminated sites',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'12336':{name:'Groundwater Quality',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'12345':{name:'Data analysis, prediction and data-driven modelling of environmental systems',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'12360':{name:'Indoor Climate',ects:10,slots:[{period:'spring',day:'Wed',time:'am'},{period:'spring',day:'Wed',time:'pm'}]},
+'12361':{name:'Ventilation and Climatic Systems',ects:10,slots:[{period:'fall',day:'Mon',time:'am'},{period:'fall',day:'Thu',time:'pm'}]},
+'12362':{name:'Daylighting and Lighting',ects:5,slots:[{period:'fall',day:'Fri',time:'pm'}]},
+'12363':{name:'Simulation of indoor environment and energy consumption using IDA ICE',ects:5,slots:[{period:'august',day:'all',time:'all'}]},
+'12421':{name:'Advanced Soil Mechanics',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'12422':{name:'Advanced Geotechnical Engineering',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'12423':{name:'Numerical modelling in soil mechanics',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'12430':{name:'Mineral resources',ects:5,slots:[{period:'fall',day:'Fri',time:'am'}]},
+'12431':{name:'Principles of Rock Mechanics',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'12451':{name:'Pavement Mechanics',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'12452':{name:'Railway Design and Maintenance',ects:10,slots:[{period:'spring',day:'Wed',time:'am'},{period:'spring',day:'Wed',time:'pm'}]},
+'12611':{name:'Heat and mass transfer in buildings',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'12612':{name:'Concrete Technology',ects:5,slots:[{period:'spring',day:'Mon',time:'am'}]},
+'12614':{name:'Brick and masonry',ects:5,slots:[{period:'august',day:'all',time:'all'}]},
+'12615':{name:'System sustainability tools for the built environment',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'12616':{name:'Construction Materials and the Green Transition',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'12772':{name:'Life Cycle Assessment of Products and Systems',ects:10,slots:[{period:'fall',day:'Mon',time:'am'},{period:'fall',day:'Thu',time:'pm'}]},
+'12773':{name:'Advanced life cycle assessment methods',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'12775':{name:'Life cycle impact assessment modelling in the context of planetary boundaries',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'22001':{name:'Acoustic signal processing',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'22002':{name:'Experimental hearing science',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'22003':{name:'Auditory signal processing and perception',ects:10,slots:[{period:'spring',day:'Mon',time:'am'},{period:'spring',day:'Thu',time:'pm'}]},
+'22006':{name:'Acoustic Communication',ects:5,slots:[{period:'fall',day:'Mon',time:'am'}]},
+'22007':{name:'Audiology and hearing devices',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'22052':{name:'Applied Signal Processing',ects:10,slots:[{period:'fall',day:'Tue',time:'pm'},{period:'fall',day:'Fri',time:'am'}]},
+'22053':{name:'Principles of Brain Computer Interface',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'22058':{name:'Wearable Sensors: Designing and Prototyping',ects:5,slots:[{period:'spring',day:'Fri',time:'am'}]},
+'22059':{name:'Laboratory Course on Advanced Wearable Sensor Design and Prototyping',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'22102':{name:'Applied Single Cell Bioinformatics',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'22107':{name:'Research Immersion, Life Science',ects:5,slots:[{period:'august',day:'all',time:'all'}]},
+'22112':{name:'High Performance Computing in Life Science',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'22115':{name:'Computational Molecular Evolution',ects:5,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'22117':{name:'Protein structure and computational biology',ects:5,slots:[{period:'spring',day:'Wed',time:'am'}]},
+'22123':{name:'Computational Precision Medicine',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'22125':{name:'Algorithms in bioinformatics',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'22126':{name:'Next-Generation-Sequencing Analysis',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'22145':{name:'Immunological Bioinformatics',ects:5,slots:[{period:'fall',day:'Wed',time:'am'}]},
+'22150':{name:'Introduction to Systems Biology; MSc',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'22160':{name:'R for Bio Data Science',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'22166':{name:'Python programming in Life Science, Msc',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'22168':{name:'Advanced Unix & Python for Bioinformaticians, Msc',ects:5,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+'22179':{name:'Module 3: Value creation in pharma- and biotechnology',ects:5,slots:[{period:'january',day:'all',time:'all'},{period:'june',day:'all',time:'all'}]},
+'22201':{name:'Immune System, Anatomy & Development',ects:5,slots:[{period:'spring',day:'Fri',time:'am'}]},
+'22203':{name:'Conceive, Design, Implement, and Operate a Healthcare Product',ects:10,slots:[{period:'fall',day:'Fri',time:'pm'}]},
+'22205':{name:'Project in healthcare engineering, June',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'22206':{name:'Project in healthcare engineering, August',ects:5,slots:[{period:'august',day:'all',time:'all'}]},
+'22207':{name:'Project in healthcare engineering, January',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'22210':{name:'Immune System in Health and Disease',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'22212':{name:'Stem cell technology for engineers',ects:5,slots:[{period:'spring',day:'Wed',time:'am'}]},
+'22230':{name:'Development and production of vaccines',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'22231':{name:'Module 1: From idea to project plan in biotech and pharmaceutical research',ects:5,slots:[{period:'fall',day:'Fri',time:'am'},{period:'fall',day:'Fri',time:'pm'}]},
+'22235':{name:'Drug delivery',ects:5,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'22236':{name:'Immunotherapy',ects:5,slots:[{period:'spring',day:'Thu',time:'am'}]},
+'22237':{name:'Preclinical drug development',ects:5,slots:[{period:'fall',day:'Wed',time:'am'}]},
+'22239':{name:'Module 2: Pilot project in Pharmaceutical Design and Engineering (3 weeks)',ects:5,slots:[{period:'january',day:'all',time:'all'},{period:'june',day:'all',time:'all'},{period:'august',day:'all',time:'all'}]},
+'22281':{name:'Biomaterials',ects:5,slots:[{period:'spring',day:'Fri',time:'pm'}]},
+'22283':{name:'Molecular thermodynamics, transport, and analytics',ects:10,slots:[{period:'fall',day:'Tue',time:'pm'},{period:'fall',day:'Fri',time:'am'}]},
+'22284':{name:'Living models of body barriers and organs',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'22449':{name:'Introduction to Biomedical product development',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'22450':{name:'Applied Biomedical Product Development',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'22475':{name:'Tissue and movement biomechanics DTU',ects:10,slots:[{period:'fall',day:'Tue',time:'pm'},{period:'fall',day:'Fri',time:'am'}]},
+'22485':{name:'Medical imaging systems',ects:10,slots:[{period:'fall',day:'Mon',time:'pm'},{period:'fall',day:'Thu',time:'am'}]},
+'22506':{name:'Medical magnetic resonance imaging',ects:5,slots:[{period:'spring',day:'Thu',time:'pm'}]},
+'22507':{name:'Advanced magnetic resonance imaging',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'22508':{name:'Practical NMR spectroscopy: Making reactions in (bio)chemistry visible',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'22511':{name:'Biomedical optics',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'22525':{name:'Medical Image Analysis',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'22530':{name:'Computational radiation dosimetry',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'22603':{name:'Light microscopy for life science',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'22610':{name:'Physics in Health Technology',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'22611':{name:'Research immersion - Physics in Health Technology, MSc',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'23101':{name:'Introduction to food production chains',ects:10,slots:[{period:'fall',day:'Mon',time:'am'},{period:'fall',day:'Thu',time:'pm'}]},
+'23102':{name:'Food safety in production chains',ects:10,slots:[{period:'spring',day:'Mon',time:'pm'},{period:'spring',day:'Thu',time:'am'}]},
+'23205':{name:'Fighting infectious diseases',ects:5,slots:[{period:'fall',day:'Fri',time:'am'}]},
+'23206':{name:'Positive microbiology and biotechnology - application of microbes in food production',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'23210':{name:'Predictive food microbiology and preservation',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'23216':{name:'Producing new sustainable food ingredients - processes and utilizations',ects:10,slots:[{period:'spring',day:'Wed',time:'am'},{period:'spring',day:'Wed',time:'pm'}]},
+'23255':{name:'The threat from antimicrobial resistance',ects:5,slots:[{period:'august',day:'all',time:'all'}]},
+'23257':{name:'Compositional data analysis with applications in genomics',ects:5,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+'23260':{name:'Applied methods in metagenomics',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'23261':{name:'Epidemiological methods for surveillance of infectious diseases',ects:5,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+'23262':{name:'Infectious disease bioinformatics',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'23263':{name:'Advanced modeling of infectious diseases',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'23272':{name:'Risk analysis in food safety',ects:10,slots:[{period:'fall',day:'Tue',time:'pm'},{period:'fall',day:'Fri',time:'am'}]},
+'23301':{name:'Practical chemical food analysis',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'23302':{name:'Food chemistry',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'23360':{name:'Practical green extraction and processing technologies',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'23511':{name:'Food production engineering basics',ects:10,slots:[{period:'fall',day:'Tue',time:'pm'},{period:'fall',day:'Fri',time:'am'}]},
+'23513':{name:'Alternative proteins and plant-based foods',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'23520':{name:'Food process design',ects:10,slots:[{period:'spring',day:'Tue',time:'pm'},{period:'spring',day:'Fri',time:'am'}]},
+'23521':{name:'Hygienic design in the food industry',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'23522':{name:'Rheology of food and biological materials',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'23531':{name:'Entrepreneurship in food and bio engineering',ects:5,slots:[{period:'august',day:'all',time:'all'}]},
+'23532':{name:'Beer brewing and safe food production',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'23552':{name:'Development of innovative future food: Ecotrophelia and Blue Dot course',ects:5,slots:[{period:'fall',day:'Tue',time:'evening'},{period:'spring',day:'Tue',time:'evening'}]},
+'23564':{name:'Integrated product innovation in the food industry',ects:10,slots:[{period:'fall',day:'Wed',time:'am'},{period:'fall',day:'Wed',time:'pm'}]},
+'23662':{name:'Introduction to molecular and reproductive toxicology',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'25302':{name:'Physical oceanography',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'25303':{name:'Mathematical biology',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'25310':{name:'Biological oceanography',ects:5,slots:[{period:'spring',day:'Thu',time:'am'}]},
+'25311':{name:'Fisheries oceanography',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'25313':{name:'Genetic methods in fisheries and aquatic biodiversity conservation',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'25314':{name:'Computational marine ecological modelling',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'25315':{name:'Genetic methods in aquaculture',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'25316':{name:'Recirculating aquaculture systems',ects:5,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+'25317':{name:'Health management and disease control in aquaculture',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'25318':{name:'Management, biodiversity, and conservation of aquatic ecosystems',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'25321':{name:'Fish nutrition and bioenergetics',ects:5,slots:[{period:'spring',day:'Tue',time:'am'},{period:'spring',day:'Thu',time:'am'}]},
+'25322':{name:'Advanced course in recirculating aquaculture systems: Design and application',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'25323':{name:'Topics in aquatic science and technology',ects:5,slots:[{period:'fall',day:'Tue',time:'evening'},{period:'spring',day:'Tue',time:'evening'},{period:'fall',day:'Tue',time:'evening'},{period:'spring',day:'Tue',time:'evening'}]},
+'25324':{name:'Applied Ocean Observation Technologies',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'25325':{name:'Marine ecosystems and climate change',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'25326':{name:'Fish physiology and welfare',ects:5,slots:[{period:'spring',day:'Tue',time:'am'},{period:'spring',day:'Thu',time:'am'}]},
+'25327':{name:'Chemical oceanography',ects:5,slots:[{period:'spring',day:'Mon',time:'am'}]},
+'25328':{name:'Mathematical models in ecology',ects:10,slots:[{period:'fall',day:'Tue',time:'pm'},{period:'fall',day:'Thu',time:'pm'}]},
+'25331':{name:'Exercises in recirculating aquaculture systems',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'25335':{name:'Sustainability of Fish Capture Methods',ects:5,slots:[{period:'spring',day:'Tue',time:'am'},{period:'spring',day:'Thu',time:'am'}]},
+'25336':{name:'Fish Capture Technology',ects:5,slots:[{period:'august',day:'all',time:'all'}]},
+'25340':{name:'Digital Ocean',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'25341':{name:'Dynamical Oceanography',ects:5,slots:[{period:'spring',day:'Fri',time:'am'}]},
+'25342':{name:'Evidence Based Advice for Aquatic Management',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'25343':{name:'Quantitative Modelling of Natural Resources',ects:5,slots:[{period:'spring',day:'Thu',time:'pm'}]},
+'25344':{name:'Environmental effects of maritime activities',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'25345':{name:'Introduction to modelling observations of natural resources',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'25346':{name:'Water quality in aquaculture',ects:5,slots:[{period:'fall',day:'Tue',time:'am'},{period:'fall',day:'Thu',time:'am'}]},
+'25347':{name:'Fundamentals of Underwater Acoustic and Optical Systems',ects:5,slots:[{period:'spring',day:'Wed',time:'am'}]},
+'25348':{name:'Low Trophic Aquaculture: shellfish, micro- and macroalgae',ects:5,slots:[{period:'august',day:'all',time:'all'}]},
+'25349':{name:'Applied Fisheries Ecology',ects:5,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'25350':{name:'Introduction to aquatic ecosystems and their organisms',ects:5,slots:[{period:'fall',day:'Tue',time:'am'},{period:'fall',day:'Thu',time:'am'}]},
+'25351':{name:'Aquaculture End-of-pipe treatment with focus on residual resources',ects:5,slots:[{period:'fall',day:'Tue',time:'am'},{period:'fall',day:'Thu',time:'am'}]},
+'25352':{name:'Blue Bioeconomy Innovation',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'25354':{name:'Applied Methods in Fisheries Technologies',ects:5,slots:[{period:'spring',day:'Tue',time:'am'},{period:'spring',day:'Thu',time:'am'}]},
+'25355':{name:'Genomic Methods for Breeding and Management for Aquatic Resources',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'25356':{name:'Coastal Ecological Modelling',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'26130':{name:'Spectroscopic methods',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'26134':{name:'Advanced Inorganic Chemistry (Inorganic Chemistry 3)',ects:5,slots:[{period:'fall',day:'Wed',time:'am'}]},
+'26231':{name:'Physical Chemistry 3',ects:5,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'26236':{name:'Statistical thermodynamics and reaction dynamics',ects:5,slots:[{period:'fall',day:'Fri',time:'am'}]},
+'26241':{name:'Applied Pharmacokinetics and Pharmacodynamics',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'26255':{name:'Molecular dynamics and machine learning',ects:5,slots:[{period:'fall',day:'Wed',time:'am'}]},
+'26263':{name:'Molecular electronic structure methods',ects:5,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+'26280':{name:'Chemistry and Physics in CO2 Storage',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'26317':{name:'Instrumental Chemical Analysis',ects:5,slots:[{period:'spring',day:'Thu',time:'am'}]},
+'26325':{name:'Chromatographic (HPLC) Purification of Biological Macromolecules',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'26416':{name:'Laboratory Course in Organic Synthesis',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'26422':{name:'Biomolecular Chemistry',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'26433':{name:'Organic Chemistry 3',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'26438':{name:'NMR Spectroscopy',ects:5,slots:[{period:'fall',day:'Fri',time:'am'}]},
+'26444':{name:'Organic Chemistry 4',ects:10,slots:[{period:'spring',day:'Tue',time:'pm'},{period:'spring',day:'Fri',time:'am'}]},
+'26446':{name:'Advanced Medicinal Chemistry',ects:5,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+'26455':{name:'Organic Reaction Mechanisms and Supramolecular Chemistry',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'26620':{name:'Chemistry and Innovation',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'27101':{name:'Assay Technology',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'27220':{name:'Advanced prokaryotic biotechnology',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'27230':{name:'Prokaryotic cell biology',ects:5,slots:[{period:'fall',day:'Mon',time:'am'}]},
+'27246':{name:'Applied enzyme technology and kinetics',ects:5,slots:[{period:'fall',day:'Tue',time:'evening'},{period:'spring',day:'Tue',time:'evening'}]},
+'27247':{name:'Experimental enzyme technology',ects:5,slots:[{period:'fall',day:'Mon',time:'am'}]},
+'27255':{name:'Advanced experimental prokaryotic molecular biology and ecology',ects:5,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'27325':{name:'Advanced protein structure engineering and analysis',ects:5,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+'27330':{name:'Quantitative analysis and modeling in protein science',ects:5,slots:[{period:'spring',day:'Fri',time:'pm'}]},
+'27419':{name:'Filamentous Fungi: Biology and Biotechnology',ects:5,slots:[{period:'spring',day:'Mon',time:'am'}]},
+'27422':{name:'Biosynthesis of natural products',ects:5,slots:[{period:'spring',day:'Thu',time:'pm'}]},
+'27423':{name:'Metabolomics and proteomics',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'27430':{name:'Eukaryotic cell biology',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'27432':{name:'Experimental molecular biology of eukaryotes',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'27436':{name:'Innovations in biopharmaceutical drug development',ects:5,slots:[{period:'fall',day:'Mon',time:'am'}]},
+'27455':{name:'Microbial adaptation to industrial processes',ects:5,slots:[{period:'spring',day:'Thu',time:'am'}]},
+'27460':{name:'Synthetic biology',ects:5,slots:[{period:'fall',day:'Wed',time:'am'}]},
+'27470':{name:'Mammalian cell technology for manufacturing of biologics',ects:5,slots:[{period:'spring',day:'Fri',time:'am'}]},
+'27472':{name:'Biopharmaceutical protein production in mammalian cells in practice',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'27510':{name:'Biosensors and bioanalysis',ects:5,slots:[{period:'spring',day:'Mon',time:'am'}]},
+'27665':{name:'LabChip: Design of Lab-on-a-chip systems',ects:5,slots:[{period:'fall',day:'Fri',time:'am'}]},
+'27666':{name:'AI-guided Protein Science: From Design to Engineering',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'28212':{name:'Polymer Chemistry',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'28213':{name:'Polymer Technology',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'28214':{name:'Polymer synthesis and characterization',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'28216':{name:'Organic Coatings Science and Technology',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'28217':{name:'Organic Coatings Science and Technology – Practical Exercises',ects:2.5,slots:[{period:'june',day:'all',time:'all'}]},
+'28233':{name:'Recovery and purification of biological products',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'28311':{name:'Chemical and Biochemical Product Design',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'28315':{name:'Applied Colloid and Surface Chemistry',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'28316':{name:'Laboratory Course in Colloid and Surface Chemistry',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'28346':{name:'Advanced fermentation technology practicum',ects:5,slots:[{period:'january',day:'all',time:'all'},{period:'june',day:'all',time:'all'}]},
+'28361':{name:'Chemical engineering model analysis',ects:7.5,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'28412':{name:'Advanced Chemical Product Design',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'28420':{name:'Separation Processes',ects:7.5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'28423':{name:'Phase Equilibria for non-ideal mixtures',ects:5,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+'28434':{name:'Membrane Technology',ects:5,slots:[{period:'spring',day:'Mon',time:'am'}]},
+'28443':{name:'Industrial Reaction Engineering',ects:7.5,slots:[{period:'spring',day:'Fri',time:'am'}]},
+'28451':{name:'Optimising Plantwide Control',ects:7.5,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+'28455':{name:'Process adaptation in Fermentation Based Biomanufacturing',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'28530':{name:'Transport Processes',ects:10,slots:[{period:'fall',day:'Wed',time:'am'},{period:'fall',day:'Wed',time:'pm'}]},
+'28811':{name:'Polymers in processes and products',ects:5,slots:[{period:'august',day:'all',time:'all'}]},
+'28831':{name:'Computational Fluid Dynamics in Chemical Engineering',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'28845':{name:'Chemical Reaction Engineering Laboratory',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'28850':{name:'Pharmaceutical Process Development',ects:5,slots:[{period:'spring',day:'Wed',time:'am'}]},
+'28852':{name:'Risk Assessment in Chemical and Biochemical Industry',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'30021':{name:'Digital Instrumentation',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'30202':{name:'Measurement Technologies in Earth and Space Physics',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'30222':{name:'Projects in Earth & Space Physics and Engineering',ects:5,slots:[{period:'january',day:'all',time:'all'},{period:'june',day:'all',time:'all'}]},
+'30224':{name:'Projects in Earth & Space Physics and Engineering',ects:5,slots:[{period:'august',day:'all',time:'all'}]},
+'30230':{name:'Data Analysis and Modeling in Geoscience and Astrophysics',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'30300':{name:'Introduction to Satellite Systems',ects:10,slots:[{period:'fall',day:'Wed',time:'am'},{period:'fall',day:'Wed',time:'pm'}]},
+'30310':{name:'Space Systems Engineering',ects:5,slots:[{period:'spring',day:'Wed',time:'am'}]},
+'30320':{name:'Spacecraft Instrumentation Systems',ects:10,slots:[{period:'spring',day:'Mon',time:'pm'},{period:'spring',day:'Thu',time:'am'}]},
+'30330':{name:'Image Analysis with Microcomputer',ects:10,slots:[{period:'fall',day:'Mon',time:'am'},{period:'fall',day:'Thu',time:'pm'},{period:'fall',day:'Mon',time:'pm'}]},
+'30340':{name:'Radar and Radiometer Systems',ects:10,slots:[{period:'spring',day:'Tue',time:'am'},{period:'spring',day:'Fri',time:'pm'}]},
+'30350':{name:'Remote Sensing',ects:10,slots:[{period:'fall',day:'Tue',time:'pm'},{period:'fall',day:'Fri',time:'am'}]},
+'30415':{name:'RF communication circuits',ects:10,slots:[{period:'fall',day:'Mon',time:'pm'},{period:'fall',day:'Thu',time:'am'}]},
+'30421':{name:'Advanced Microwave Techniques and High Speed Electronics',ects:10,slots:[{period:'spring',day:'Mon',time:'pm'},{period:'spring',day:'Thu',time:'am'}]},
+'30428':{name:'Advanced electromagnetics',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'30430':{name:'Advanced antenna techniques and measurements',ects:10,slots:[{period:'fall',day:'Wed',time:'am'},{period:'fall',day:'Wed',time:'pm'}]},
+'30510':{name:'GPS, GIS and Surveying',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'30540':{name:'Mapping from Aerial and Satellite Images',ects:5,slots:[{period:'fall',day:'Wed',time:'am'}]},
+'30545':{name:'Analysis of spatial and temporal data within geoscience',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'30552':{name:'Satellite Geodesy',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'30554':{name:'Global Navigation Satellite Systems',ects:5,slots:[{period:'spring',day:'Thu',time:'am'}]},
+'30555':{name:'Microwave remote sensing models and data',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'30561':{name:'Physical Geodesy',ects:5,slots:[{period:'spring',day:'Mon',time:'am'}]},
+'30564':{name:'Summer School in Physical Geodesy and Climate',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'30574':{name:'Earth observations for monitoring changes (EO4Change)',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'30720':{name:'Space Physics - Physics of the space environment',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'30742':{name:'Exoplanets',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'30745':{name:'Earth and Planetary Magnetism',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'30752':{name:'Cryosphere physics and observation',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'30755':{name:'Climate change - physics and observations',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'30760':{name:'Inverse Problems and Machine Learning in Earth and Space Physics',ects:5,slots:[{period:'spring',day:'Thu',time:'pm'}]},
+'30784':{name:'X-ray and gamma-ray detectors for space instrumentation',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'30785':{name:'Scientific instrumentation for Astronomical telescopes',ects:5,slots:[{period:'spring',day:'Fri',time:'am'}]},
+'30791':{name:'Physical processes in astronomy',ects:5,slots:[{period:'fall',day:'Fri',time:'pm'}]},
+'30794':{name:'Astrophysical Data Analyses',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'34032':{name:'Optical properties of solids',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'34034':{name:'Lasers and photonic systems',ects:5,slots:[{period:'fall',day:'Mon',time:'am'}]},
+'34041':{name:'Waveguide optics',ects:5,slots:[{period:'spring',day:'Fri',time:'am'}]},
+'34042':{name:'Quantum photonic communication',ects:5,slots:[{period:'fall',day:'Wed',time:'am'}]},
+'34046':{name:'Experimental methods in photonics',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'34051':{name:'Nanophotonics',ects:10,slots:[{period:'spring',day:'Mon',time:'am'},{period:'spring',day:'Thu',time:'pm'}]},
+'34052':{name:'Nonlinear optics',ects:10,slots:[{period:'fall',day:'Tue',time:'am'},{period:'fall',day:'Fri',time:'pm'}]},
+'34053':{name:'Numerical methods in photonics',ects:5,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+'34060':{name:'Ultrafast optics: fundamentals and applications',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'34061':{name:'Optical measurement methods and signal analysis',ects:5,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'34062':{name:'Photonic integrated circuits',ects:10,slots:[{period:'spring',day:'Tue',time:'am'},{period:'spring',day:'Fri',time:'pm'}]},
+'34063':{name:'Epitaxy: Principles and Applications',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'34130':{name:'Fundamentals of fibre-optic communication systems',ects:10,slots:[{period:'fall',day:'Tue',time:'pm'},{period:'fall',day:'Fri',time:'am'}]},
+'34153':{name:'Physical concepts in optical communication',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'34156':{name:'Advanced Optical Communication Systems',ects:5,slots:[{period:'fall',day:'Mon',time:'am'}]},
+'34231':{name:'Digital communication 1',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'34240':{name:'Data Science, Compression and Image Communication',ects:5,slots:[{period:'spring',day:'Fri',time:'am'}]},
+'34241':{name:'Digital video technology',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'34242':{name:'Machine learning techniques for design and optimization of communication systems',ects:5,slots:[{period:'january',day:'all',time:'all'},{period:'june',day:'all',time:'all'}]},
+'34249':{name:'Synthesis Project for Communication Technologies',ects:10,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'34250':{name:'Advanced image and video coding',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'34251':{name:'Advanced forward error correction and iterative decoding',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'34343':{name:'Mobile backhaul networks',ects:5,slots:[{period:'fall',day:'Tue',time:'evening'},{period:'spring',day:'Tue',time:'evening'}]},
+'34345':{name:'Signalling systems and technology for railways',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'34346':{name:'Networking technologies and application development for Internet of Things (IoT)',ects:5,slots:[{period:'spring',day:'Thu',time:'am'}]},
+'34349':{name:'FPGA design for communication systems',ects:10,slots:[{period:'spring',day:'Wed',time:'am'},{period:'spring',day:'Wed',time:'pm'}]},
+'34351':{name:'Access networks and home networks',ects:5,slots:[{period:'spring',day:'Thu',time:'pm'}]},
+'34359':{name:'SDN: software-defined networking',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'34365':{name:'IoT Prototyping',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'34366':{name:'Intelligent systems',ects:5,slots:[{period:'fall',day:'Tue',time:'evening'},{period:'spring',day:'Tue',time:'evening'}]},
+'34367':{name:'Project in Intelligent Systems',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'34368':{name:'Global communication network infrastructure and design',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'34369':{name:'Project work in Global communication network infrastructure and design',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'34370':{name:'Cloud Networking',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'34371':{name:'Communication Network Security',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'34373':{name:'Introduction to microcontroller development for IoT using embedded C',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'34374':{name:'IoT Hardware and PCB Design',ects:5,slots:[{period:'spring',day:'Fri',time:'am'}]},
+'34430':{name:'Introduction to biophotonics',ects:5,slots:[{period:'spring',day:'Wed',time:'am'}]},
+'34431':{name:'Optical biosensors',ects:5,slots:[{period:'fall',day:'Wed',time:'am'}]},
+'34440':{name:'Novel optical fibers in life sciences',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'34451':{name:'Nonlinear mathematical physics',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'34539':{name:'Design, fabrication and characterization of optical planar waveguide components',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'34542':{name:'Artificial lighting, science and practice',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'34652':{name:'Power Electronics 1',ects:10,slots:[{period:'fall',day:'Wed',time:'am'},{period:'fall',day:'Wed',time:'pm'}]},
+'34653':{name:'Power Electronics 2. Laboratory course',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'34654':{name:'Circuit technology and EMC',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'34655':{name:'Integrated analog electronics 2',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'34656':{name:'Design and layout of integrated CMOS circuits',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'34657':{name:'System level integrated circuit design',ects:10,slots:[{period:'fall',day:'Wed',time:'am'},{period:'fall',day:'Wed',time:'pm'}]},
+'34745':{name:'Linear control design 2',ects:10,slots:[{period:'fall',day:'Tue',time:'am'},{period:'fall',day:'Fri',time:'pm'}]},
+'34746':{name:'Robust and fault-tolerant control',ects:10,slots:[{period:'spring',day:'Mon',time:'am'},{period:'spring',day:'Thu',time:'pm'}]},
+'34748':{name:'Modelling for operation of complex industrial plants',ects:5,slots:[{period:'spring',day:'Wed',time:'am'}]},
+'34752':{name:'Bio-inspired control for robots',ects:5,slots:[{period:'august',day:'all',time:'all'}]},
+'34753':{name:'Robotics',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'34755':{name:'Building dependable robot systems',ects:5,slots:[{period:'spring',day:'Fri',time:'pm'}]},
+'34757':{name:'Unmanned autonomous systems',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'34759':{name:'Perception for Autonomous Systems',ects:10,slots:[{period:'fall',day:'Mon',time:'am'},{period:'fall',day:'Thu',time:'pm'}]},
+'34760':{name:'Safety and Reliability in Robotic and Automation Systems',ects:5,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'34761':{name:'Robot Autonomy',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'34763':{name:'Autonomous Marine Robotics',ects:5,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'34764':{name:'Robotics and Automation in Pharmaceutical Manufacturing',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'34765':{name:'Digital Control',ects:5,slots:[{period:'fall',day:'Wed',time:'am'}]},
+'34840':{name:'Fundamentals of acoustics and noise control',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'34844':{name:'Building acoustics',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'34846':{name:'Environmental acoustics',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'34848':{name:'Challenges in Acoustic Microsystems',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'34850':{name:'Architectural acoustics',ects:10,slots:[{period:'spring',day:'Tue',time:'pm'},{period:'spring',day:'Fri',time:'am'}]},
+'34860':{name:'Advanced acoustics',ects:10,slots:[{period:'spring',day:'Mon',time:'pm'},{period:'spring',day:'Thu',time:'am'}]},
+'34865':{name:'Numerical acoustics',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'34870':{name:'Electroacoustic transducers and systems',ects:10,slots:[{period:'fall',day:'Mon',time:'pm'},{period:'fall',day:'Thu',time:'am'}]},
+'34871':{name:'Nonlinear transducers',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'34880':{name:'Structure-borne sound',ects:10,slots:[{period:'fall',day:'Tue',time:'pm'},{period:'fall',day:'Fri',time:'am'}]},
+'38103':{name:'X-Tech Entrepreneurship',ects:10,slots:[{period:'spring',day:'Tue',time:'am'},{period:'spring',day:'Fri',time:'pm'},{period:'fall',day:'Tue',time:'am'},{period:'fall',day:'Fri',time:'pm'}]},
+'38104':{name:'Entrepreneurial Finance',ects:5,slots:[{period:'spring',day:'Wed',time:'am'}]},
+'38106':{name:'Developing an Entrepreneurial mindset',ects:5,slots:[{period:'spring',day:'Thu',time:'pm'},{period:'fall',day:'Thu',time:'pm'}]},
+'38108':{name:'Technology and Innovation Management',ects:5,slots:[{period:'fall',day:'Fri',time:'pm'}]},
+'38109':{name:'X-Tech+',ects:10,slots:[{period:'fall',day:'Tue',time:'pm'},{period:'fall',day:'Fri',time:'am'},{period:'spring',day:'Tue',time:'pm'},{period:'spring',day:'Fri',time:'am'}]},
+'38110':{name:'Staging co-creation and creativity',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'38111':{name:'The Practice of Consulting',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'38112':{name:'Entrepreneurial Marketing',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'38113':{name:'Applied AI for Entrepreneurs',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'38201':{name:'Entrepreneurial Life Skills',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'38202':{name:'Entrepreneurial Leadership Journey',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'38203':{name:'Due Diligence of New Ventures',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'38204':{name:'Feasibility Studies',ects:10,slots:[{period:'fall',day:'Wed',time:'am'},{period:'fall',day:'Wed',time:'pm'}]},
+'38301':{name:'Module 1: Start-up Exploration',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'38302':{name:'Module 2: Start-up Incubation',ects:5,slots:[{period:'fall',day:'Tue',time:'evening'},{period:'spring',day:'Tue',time:'evening'}]},
+'41073':{name:'Development and operation of product/service-systems',ects:10,slots:[{period:'fall',day:'Tue',time:'am'},{period:'fall',day:'Tue',time:'pm'}]},
+'41083':{name:'Technology platforms and architectures',ects:5,slots:[{period:'spring',day:'Thu',time:'am'}]},
+'41084':{name:'Biologically Inspired Design',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'41107':{name:'Marine and ocean engineering',ects:5,slots:[{period:'spring',day:'Thu',time:'pm'}]},
+'41111':{name:'Hydrodynamics 2',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'41113':{name:'Computer modelling for marine and coastal engineering',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'41117':{name:'Marine and Coastal Structures',ects:5,slots:[{period:'fall',day:'Mon',time:'am'}]},
+'41126':{name:'Fluvial and marine sediment transport',ects:5,slots:[{period:'spring',day:'Fri',time:'am'}]},
+'41129':{name:'Turbulent flows',ects:5,slots:[{period:'fall',day:'Fri',time:'am'}]},
+'41216':{name:'Structural assessment of ships',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'41222':{name:'Wave loads on ships and offshore structures',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'41226':{name:'Advanced Wave Hydrodynamics',ects:5,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'41237':{name:'Dynamics of structures: theory and analysis',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'41275':{name:'Ship operations',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'41315':{name:'Applied CFD',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'41316':{name:'Advanced CFD',ects:5,slots:[{period:'fall',day:'Fri',time:'pm'}]},
+'41321':{name:'Complex flows',ects:5,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+'41462':{name:'Building Performance Simulation',ects:5,slots:[{period:'fall',day:'Wed',time:'am'}]},
+'41463':{name:'High performance buildings',ects:10,slots:[{period:'fall',day:'Mon',time:'pm'},{period:'fall',day:'Thu',time:'am'}]},
+'41465':{name:'Computational Fluid Dynamics for Buildings',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'41466':{name:'Sustainable heating and cooling of buildings',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'41512':{name:'Power transmitting machine elements - design and optimization',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'41514':{name:'Dynamics of machinery',ects:5,slots:[{period:'spring',day:'Fri',time:'am'}]},
+'41515':{name:'Computational multibody dynamics',ects:5,slots:[{period:'fall',day:'Mon',time:'am'}]},
+'41516':{name:'Anisotropy and fibre composites',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'41517':{name:'Stiffened plates and sandwich constructions',ects:5,slots:[{period:'spring',day:'Thu',time:'am'}]},
+'41522':{name:'Advanced dynamics and vibrations',ects:5,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+'41524':{name:'Tribology of machine elements',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'41525':{name:'Finite Element Methods',ects:10,slots:[{period:'fall',day:'Wed',time:'am'},{period:'fall',day:'Wed',time:'pm'}]},
+'41526':{name:'Fracture mechanics',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'41528':{name:'Advanced mechanics of materials',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'41563':{name:'Fluid Power & Motion Control',ects:5,slots:[{period:'spring',day:'Mon',time:'am'}]},
+'41635':{name:'Robust design of products and mechanisms',ects:5,slots:[{period:'spring',day:'Thu',time:'pm'}]},
+'41637':{name:'Mass Customization - application of product configuration',ects:10,slots:[{period:'fall',day:'Wed',time:'am'},{period:'fall',day:'Wed',time:'pm'}]},
+'41638':{name:'Complexity Management',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'41639':{name:'Holistic Design of Engineering Systems',ects:10,slots:[{period:'spring',day:'Wed',time:'am'},{period:'spring',day:'Wed',time:'pm'}]},
+'41653':{name:'Corrosion (theory and engineering)',ects:10,slots:[{period:'fall',day:'Wed',time:'am'},{period:'fall',day:'Wed',time:'pm'}]},
+'41656':{name:'Materials in advanced applications and products',ects:10,slots:[{period:'spring',day:'Tue',time:'pm'},{period:'spring',day:'Fri',time:'am'}]},
+'41658':{name:'Methods for experimental materials characterization',ects:5,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+'41661':{name:'Metals technology',ects:5,slots:[{period:'fall',day:'Mon',time:'am'}]},
+'41662':{name:'Physical metallurgy',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'41667':{name:'Project course in materials engineering',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'41668':{name:'Computational Materials Science',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'41669':{name:'Advanced surface engineering',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'41730':{name:'Industrial forming of metals',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'41733':{name:'Metallurgy, design and manufacturing of cast components',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'41734':{name:'Geometrical metrology and machine testing',ects:5,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'41735':{name:'Experimental methods in 3D printing (additive manufacturing)',ects:5,slots:[{period:'august',day:'all',time:'all'}]},
+'41737':{name:'Design of plastic products',ects:5,slots:[{period:'spring',day:'Mon',time:'am'}]},
+'41739':{name:'Experimental plastic and metal processing technology',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'41740':{name:'Digital Manufacturing - Industry 4.0',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'41743':{name:'Micro product design, development and production',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'41747':{name:'Modelling in materials and manufacturing engineering - heat transfer and diffusion',ects:5,slots:[{period:'fall',day:'Fri',time:'am'}]},
+'41749':{name:'Precision Machining',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'41750':{name:'Composites Manufacturing',ects:5,slots:[{period:'spring',day:'Thu',time:'am'}]},
+'41808':{name:'Experimental solid mechanics',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'41813':{name:'Finite Element Methods for sound and vibrations',ects:5,slots:[{period:'spring',day:'Wed',time:'am'}]},
+'41822':{name:'Experimental fluid mechanics',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'41832':{name:'Experimental Structural Mechanics',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'41931':{name:'Building Fire Safety',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'41932':{name:'Fire dynamics',ects:5,slots:[{period:'spring',day:'Fri',time:'am'}]},
+'41933':{name:'Structural Fire Safety Design',ects:5,slots:[{period:'spring',day:'Fri',time:'pm'}]},
+'41934':{name:'Advanced Building Information Modeling (BIM)',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'41935':{name:'Super-light structures',ects:5,slots:[{period:'spring',day:'Fri',time:'am'}]},
+'41936':{name:'Advanced Building Design',ects:10,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+'41937':{name:'Structural design of precast concrete buildings',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'41938':{name:'Agile Prototyping',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'41940':{name:'Advanced Digital Technologies in Construction Projects',ects:5,slots:[{period:'spring',day:'Mon',time:'am'}]},
+'41961':{name:'Computational Structural Modelling 2: Non-linear Finite Element Method',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'41963':{name:'Advanced Concrete Structures',ects:5,slots:[{period:'fall',day:'Fri',time:'am'}]},
+'41967':{name:'Seismic and Wind Engineering',ects:10,slots:[{period:'fall',day:'Tue',time:'am'},{period:'fall',day:'Fri',time:'pm'}]},
+'41968':{name:'Bridge Structures',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'41969':{name:'Probabilistic Modelling in Civil Engineering',ects:5,slots:[{period:'spring',day:'Thu',time:'am'}]},
+'41970':{name:'E-course in Random Vibrations',ects:5,slots:[{period:'august',day:'all',time:'all'}]},
+'41972':{name:'Plated Steel Structures',ects:5,slots:[{period:'spring',day:'Mon',time:'am'}]},
+'42001':{name:'Large scale energy system analysis',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'42014':{name:'Environmental and Resource Economics',ects:5,slots:[{period:'fall',day:'Tue',time:'evening'},{period:'spring',day:'Tue',time:'evening'}]},
+'42016':{name:'Business Economics and Finance',ects:5,slots:[{period:'spring',day:'Fri',time:'pm'}]},
+'42112':{name:'Mathematical Programming Modelling',ects:5,slots:[{period:'january',day:'all',time:'all'}]},
+'42114':{name:'Integer Programming',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'42115':{name:'Network Optimization',ects:5,slots:[{period:'fall',day:'Fri',time:'am'}]},
+'42136':{name:'Large Scale Optimization using Decomposition',ects:5,slots:[{period:'spring',day:'Thu',time:'am'}]},
+'42137':{name:'Optimization using metaheuristics',ects:5,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+'42180':{name:'Quantitative modelling of behaviour',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'42186':{name:'Model-based machine learning',ects:5,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'42189':{name:'Transport System Analysis',ects:5,slots:[{period:'spring',day:'Fri',time:'am'}]},
+'42380':{name:'Supply Chain Analytics',ects:5,slots:[{period:'spring',day:'Wed',time:'am'}]},
+'42402':{name:'Sustainable Operations and Supply Chain Management (O&SCM)',ects:5,slots:[{period:'fall',day:'Tue',time:'am'}]},
+'42403':{name:'Advanced Operations Management for Production and Service Systems',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'42404':{name:'Maritime Logistics and Management',ects:5,slots:[{period:'spring',day:'Wed',time:'pm'}]},
+'42417':{name:'Simulation in Operations Management',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'42543':{name:'Management of organizational change',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'42576':{name:'From Analytics to Action',ects:5,slots:[{period:'spring',day:'Mon',time:'am'}]},
+'42577':{name:'Introduction to Business Analytics',ects:5,slots:[{period:'fall',day:'Mon',time:'am'}]},
+'42578':{name:'Advanced Business Analytics',ects:5,slots:[{period:'spring',day:'Fri',time:'pm'}]},
+'42879':{name:'Decision Support and Strategic Assessment',ects:5,slots:[{period:'fall',day:'Thu',time:'am'}]},
+'42893':{name:'Psychology for engineers',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'46110':{name:'Fundamentals of Aerodynamics',ects:5,slots:[{period:'spring',day:'Tue',time:'pm'}]},
+'46115':{name:'Turbulence modeling',ects:5,slots:[{period:'fall',day:'Tue',time:'pm'}]},
+'46411':{name:'Design of large composite structures',ects:5,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+'46415':{name:'Numerical design optimization of wind turbines',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'46420':{name:'Composite Materials and Fibres',ects:5,slots:[{period:'fall',day:'Mon',time:'pm'}]},
+'46610':{name:'Design-Build for Wind Energy competitions (BlueDot)',ects:10,slots:[{period:'spring',day:'Mon',time:'pm'}]},
+'46705':{name:'Power grid analysis',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'46711':{name:'Stability and control in electric power systems',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'46715':{name:'Transients in power systems',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'46720':{name:'High voltage engineering',ects:10,slots:[{period:'spring',day:'Wed',time:'am'},{period:'spring',day:'Wed',time:'pm'}]},
+'46750':{name:'Optimization in modern power systems',ects:5,slots:[{period:'fall',day:'Wed',time:'am'}]},
+'46765':{name:'Machine learning for energy systems',ects:5,slots:[{period:'fall',day:'Wed',time:'pm'}]},
+'46770':{name:'Integrated energy grids',ects:5,slots:[{period:'spring',day:'Wed',time:'am'}]},
+'46775':{name:'Real-time electro-magnetic transient simulation and protection testing in power systems',ects:5,slots:[{period:'june',day:'all',time:'all'}]},
+'47304':{name:'Ceramic science and engineering',ects:10,slots:[{period:'spring',day:'Mon',time:'pm'},{period:'spring',day:'Thu',time:'am'}]},
+'47334':{name:'Carbon capture, utilization, and storage',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'47339':{name:'Solid state and structural chemistry',ects:5,slots:[{period:'fall',day:'Mon',time:'am'}]},
+'47342':{name:'Molten salt chemistry and technologies',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'63851':{name:'Project Management',ects:5,slots:[{period:'january',day:'all',time:'all'},{period:'august',day:'all',time:'all'}]},
+'63870':{name:'Needfinding at the Hospital',ects:5,slots:[{period:'fall',day:'Thu',time:'pm'}]},
+'63881':{name:'Railway transport and sustainable logistics',ects:5,slots:[{period:'spring',day:'Tue',time:'am'}]},
+'88383':{name:'Academic Information Retrieval',ects:2.5,slots:[{period:'january',day:'all',time:'all'},{period:'june',day:'all',time:'all'}]},
+'KU101':{name:'Pathophysiology',ects:10,slots:[{period:'fall',day:'Mon',time:'am'},{period:'fall',day:'Thu',time:'pm'}]},
+'KU103':{name:'Biomechanics and Neural Control of Human Movement',ects:10,slots:[{period:'spring',day:'Mon',time:'pm'},{period:'spring',day:'Thu',time:'am'}]},
+'KU105':{name:'Advanced Physiological Modelling',ects:10,slots:[{period:'fall',day:'Wed',time:'am'},{period:'fall',day:'Wed',time:'pm'}]},
+'KU115':{name:'Pharmacometrics',ects:7.5,slots:[{period:'fall',day:'Tue',time:'am'},{period:'fall',day:'Thu',time:'am'},{period:'fall',day:'Thu',time:'pm'}]},
+'KU180':{name:'Medical Use of Ionizing Radiation',ects:10,slots:[{period:'fall',day:'Wed',time:'am'},{period:'fall',day:'Wed',time:'pm'}]},
+'KU181':{name:'Radioactive Isotopes and Ionizing Radiation',ects:7.5,slots:[{period:'spring',day:'Mon',time:'pm'},{period:'spring',day:'Fri',time:'pm'}]},
+
+};
+
+const PC={
+  polytechnic:{base:'#3b82f6',light:'#dbeafe'},innovation:{base:'#8b5cf6',light:'#ede9fe'},
+  mandatory:{base:'#C0001B',light:'#fce8eb'},digital:{base:'#0891b2',light:'#cffafe'},
+  technology:{base:'#ea580c',light:'#fff7ed'},general_1:{base:'#16a34a',light:'#dcfce7'},
+  general_2:{base:'#65a30d',light:'#ecfccb'},elective:{base:'#6b7280',light:'#f3f4f6'},
+  rec_elective:{base:'#9ca3af',light:'#f9fafb'}
+};
+
+
+const POOL_CONFIGS={
+'General_2025':{pools:[
+{id:'polytechnic',label:'Polytechnic Foundation',req:10,color:PC.polytechnic,courses:['12100','12101','12105','12106','42500','42501','42502','42503','42504','42505','41636']},
+{id:'innovation',label:'Innovation II',req:5,color:PC.innovation,courses:['28485','34541','38102','41636']},
+{id:'mandatory',label:'Core Mandatory',req:15,color:PC.mandatory,courses:['28870','42015','46205']},
+{id:'general_1',label:'Programme Specific',req:30,color:PC.general_1,courses:['10304','10333','10339','10850','10871','26510','28242','28244','28271','28345','28350','28871','28872','34540','34551','34552','34553','34554','41317','41320','41343','41346','41416','41417','41418','41419','41420','41461','41464','41468','41469','46100','46120','46200','46211','46215','46230','46300','46310','46320','46400','46500','46550','46600','46700','46725','46735','46740','46745','46755','47301','47302','47305','47310','47317','47319','47330','47332','47333','47335','47336','47338','47341']},
+{id:'elective',label:'Elective',req:30,color:PC.elective,courses:[]}],
+recElectives:[]},
+'Bio-based Fuels_2025':{pools:[
+{id:'polytechnic',label:'Polytechnic Foundation',req:10,color:PC.polytechnic,courses:['12100','12101','12105','12106','42500','42501','42502','42503','42504','42505','41636']},
+{id:'innovation',label:'Innovation II',req:5,color:PC.innovation,courses:['28485']},
+{id:'mandatory',label:'Core Mandatory',req:30,color:PC.mandatory,courses:['28345','28870','28872','41418','42015','46205']},
+{id:'general_1',label:'Specialization Elective',req:15,color:PC.general_1,courses:['10339','26510','28242','28244','28271','28345','28350','28871']},
+{id:'elective',label:'Elective',req:30,color:PC.elective,courses:[]}],
+recElectives:[]},
+'Chemical Energy Conversion and Storage_2025':{pools:[
+{id:'polytechnic',label:'Polytechnic Foundation',req:10,color:PC.polytechnic,courses:['12100','12101','12105','12106','42500','42501','42502','42503','42504','42505','41636']},
+{id:'innovation',label:'Innovation II',req:5,color:PC.innovation,courses:['38102']},
+{id:'mandatory',label:'Core Mandatory',req:30,color:PC.mandatory,courses:['28870','42015','46205','47305','47319','47330']},
+{id:'general_1',label:'Specialization Elective',req:15,color:PC.general_1,courses:['10304','10333','26510','41418','47301','47302','47310','47317','47332','47333','47335','47336','47338','47341','47514']},
+{id:'elective',label:'Elective',req:30,color:PC.elective,courses:[]}],
+recElectives:[]},
+'Solar Energy_2025':{pools:[
+{id:'polytechnic',label:'Polytechnic Foundation',req:10,color:PC.polytechnic,courses:['12100','12101','12105','12106','42500','42501','42502','42503','42504','42505','41636']},
+{id:'innovation',label:'Innovation II',req:5,color:PC.innovation,courses:['34541']},
+{id:'mandatory',label:'Core Mandatory',req:30,color:PC.mandatory,courses:['28870','34552','41464','42015','46205']},
+{id:'general_1',label:'Specialization Elective',req:15,color:PC.general_1,courses:['10850','10871','34540','34551','34553','34554','34620','41461','41469','46700','46740','46755','47330','47338']},
+{id:'elective',label:'Elective',req:30,color:PC.elective,courses:[]}],
+recElectives:[]},
+'Thermal Energy Conversion and Storage_2025':{pools:[
+{id:'polytechnic',label:'Polytechnic Foundation',req:10,color:PC.polytechnic,courses:['12100','12101','12105','12106','42500','42501','42502','42503','42504','42505','41636']},
+{id:'innovation',label:'Innovation II',req:5,color:PC.innovation,courses:['41636']},
+{id:'mandatory',label:'Core Mandatory',req:30,color:PC.mandatory,courses:['28870','41416','41417','42015','46205']},
+{id:'general_1',label:'Specialization Elective',req:15,color:PC.general_1,courses:['28271','41317','41320','41343','41346','41418','41419','41420','41464','41468']},
+{id:'elective',label:'Elective',req:30,color:PC.elective,courses:[]}],
+recElectives:[]},
+'Wind Energy_2025':{pools:[
+{id:'polytechnic',label:'Polytechnic Foundation',req:10,color:PC.polytechnic,courses:['12100','12101','12105','12106','42500','42501','42502','42503','42504','42505','41636']},
+{id:'innovation',label:'Innovation II',req:5,color:PC.innovation,courses:['41636']},
+{id:'mandatory',label:'Core Mandatory',req:30,color:PC.mandatory,courses:['28870','42015','46200','46205','46300']},
+{id:'general_1',label:'Specialization Elective',req:15,color:PC.general_1,courses:['46100','46120','46211','46215','46230','46310','46320','46400','46500','46550','46600','46700','46725','46735','46740','46745','46755']},
+{id:'elective',label:'Elective',req:30,color:PC.elective,courses:[]}],
+recElectives:[]},
+};
+
+const DAYS=['Mon','Tue','Wed','Thu','Fri'];
+const TIMES=['am','pm'];
+const PT=[
+{id:'january',label:'January',weeks:3},{id:'spring',label:'Spring Semester',weeks:13},
+{id:'june',label:'June',weeks:3},{id:'august',label:'August',weeks:3},
+{id:'fall',label:'Fall Semester',weeks:13}];
+
+// ══════════════════════════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════════════════════════
+let state={spec:'',year:2025,periods:[],poolOverrides:{},nextId:1};
+
+function cfg(){return state.spec?POOL_CONFIGS[state.spec+'_'+state.year]:null}
+
+// ══════════════════════════════════════════════════════════════════════════
+// POOL LOGIC
+// ══════════════════════════════════════════════════════════════════════════
+function getCoursePools(code,pc){
+  if(!pc)return[];
+  return pc.pools.filter(p=>p.id!=='elective'&&p.courses.includes(code));
+}
+function isRecElective(code,pc){return(pc.recElectives||[]).includes(code)}
+
+function getBarColors(code,pc,assignments){
+  if(!pc)return[PC.elective.base];
+  // Always show the pool color(s) the course belongs to, even if it overflows to elective
+  const pools=getCoursePools(code,pc);
+  if(pools.length>=2) return pools.slice(0,2).map(p=>p.color.base);
+  if(pools.length===1) return[pools[0].color.base];
+  if(isRecElective(code,pc))return[PC.rec_elective.base];
+  return[PC.elective.base];
+}
+
+function getBarStyle(colors){
+  if(colors.length===1)return `background:${colors[0]}`;
+  return `background:linear-gradient(to bottom,${colors[0]} 50%,${colors[1]} 50%)`;
+}
+
+// Check if a course is overflow: either assigned to elective despite belonging to pools,
+// or assigned to a pool that's already satisfied by other courses
+function getOverflowInfo(code,pc,assignments,poolEcts){
+  if(!pc||!assignments)return null;
+  const assigned=assignments[code];
+  const pools=getCoursePools(code,pc);
+  if(pools.length===0)return null;
+  const ects=COURSES[code]?.ects||5;
+  if(assigned==='elective'){
+    return pools.map(p=>p.label).join(' / ');
+  }
+  if(assigned&&assigned!=='elective'){
+    const pool=pc.pools.find(p=>p.id===assigned);
+    if(pool&&poolEcts[assigned]-ects>=pool.req){
+      return pool.label;
+    }
+  }
+  return null;
+}
+
+function computePoolStatus(){
+  const pc=cfg();if(!pc)return null;
+  const poolEcts={};const assignments={};
+  pc.pools.forEach(p=>{poolEcts[p.id]=0});
+
+  const unique=new Set();const codes=[];
+  state.periods.forEach(p=>{
+    Object.values(p.selections||{}).forEach(c=>{
+      if(c&&!unique.has(c)){unique.add(c);codes.push(c)}
+    });
+  });
+
+  // Overrides first
+  const unassigned=[];
+  codes.forEach(code=>{
+    if(state.poolOverrides[code]){
+      assignments[code]=state.poolOverrides[code];
+      poolEcts[state.poolOverrides[code]]=(poolEcts[state.poolOverrides[code]]||0)+(COURSES[code]?.ects||5);
+    } else unassigned.push(code);
+  });
+
+  // Single-pool, then multi-pool, then no-pool
+  const s1=unassigned.filter(c=>getCoursePools(c,pc).length===1);
+  const sM=unassigned.filter(c=>getCoursePools(c,pc).length>1);
+  const s0=unassigned.filter(c=>getCoursePools(c,pc).length===0);
+  s0.forEach(c=>{assignments[c]='elective';poolEcts.elective+=(COURSES[c]?.ects||5)});
+  s1.forEach(c=>{
+    const ects=COURSES[c]?.ects||5;const pool=getCoursePools(c,pc)[0];
+    if(pool.req-(poolEcts[pool.id]||0)>0){assignments[c]=pool.id;poolEcts[pool.id]+=ects}
+    else{assignments[c]='elective';poolEcts.elective+=ects}
+  });
+  sM.forEach(c=>{
+    const ects=COURSES[c]?.ects||5;const pools=getCoursePools(c,pc);
+    let best=null,bestR=-Infinity;
+    pools.forEach(p=>{const r=p.req-(poolEcts[p.id]||0);if(r>0&&r>bestR){best=p.id;bestR=r}});
+    if(!best){assignments[c]='elective';poolEcts.elective+=ects}
+    else{assignments[c]=best;poolEcts[best]+=ects}
+  });
+  return{poolEcts,assignments};
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// SLOT INDEX
+// ══════════════════════════════════════════════════════════════════════════
+function buildSlotIndex(){
+  const idx={};
+  PT.forEach(pt=>{
+    idx[pt.id]={};
+    if(pt.weeks===3){
+      idx[pt.id]['all_all']=[];
+      Object.entries(COURSES).forEach(([code,info])=>{
+        if(!info.placeholder&&info.slots.some(s=>s.period===pt.id))idx[pt.id]['all_all'].push(code);
+      });
+    }else{
+      DAYS.forEach(day=>{
+        [...TIMES,'evening'].forEach(time=>{
+          if(time==='evening'&&day!=='Tue')return;
+          const k=day+'_'+time;idx[pt.id][k]=[];
+          Object.entries(COURSES).forEach(([code,info])=>{
+            if(!info.placeholder&&info.slots.some(s=>s.period===pt.id&&s.day===day&&s.time===time))
+              idx[pt.id][k].push(code);
+          });
+        });
+      });
+    }
+  });
+  return idx;
+}
+let slotIdx=buildSlotIndex();
+
+// ══════════════════════════════════════════════════════════════════════════
+// ACTIONS
+// ══════════════════════════════════════════════════════════════════════════
+function onSpecChange(){
+  state.spec=document.getElementById('specSel').value;
+  state.periods=[];state.poolOverrides={};state.nextId=1;
+  render();
+}
+function onYearChange(){
+  state.year=+document.getElementById('yearSel').value;
+  state.periods=[];state.poolOverrides={};state.nextId=1;
+  render();
+}
+
+function addPeriod(typeId){
+  const pt=PT.find(p=>p.id===typeId);
+  const count=state.periods.filter(p=>p.type===typeId).length+1;
+  state.periods.push({id:state.nextId++,type:typeId,selections:{}});
+  renumber();render();
+}
+function removePeriod(id){
+  state.periods=state.periods.filter(p=>p.id!==id);renumber();render();
+}
+function movePeriod(id,dir){
+  const i=state.periods.findIndex(p=>p.id===id);
+  const j=i+dir;if(j<0||j>=state.periods.length)return;
+  [state.periods[i],state.periods[j]]=[state.periods[j],state.periods[i]];
+  renumber();render();
+}
+function renumber(){
+  const counts={};
+  state.periods.forEach(p=>{
+    counts[p.type]=(counts[p.type]||0)+1;p.number=counts[p.type];
+    const pt=PT.find(t=>t.id===p.type);
+    p.label=pt.label+' '+p.number+' ('+pt.weeks+' weeks)';
+  });
+}
+
+// Pending custom course state
+let pendingCustom={periodId:null,slotKey:null,type:null};
+
+function selectCourse(periodId,slotKey,code){
+  const p=state.periods.find(pp=>pp.id===periodId);if(!p)return;
+
+  // If custom course, open modal instead
+  if(code==='__other'||code==='__external'){
+    closeDropdown();
+    pendingCustom={periodId,slotKey,type:code};
+    document.getElementById('cmodalTitle').textContent=
+      code==='__other'?'Add Other DTU Elective / Special Course':'Add External / Semester Abroad Elective';
+    document.getElementById('cmodalName').value='';
+    document.getElementById('cmodalEcts').value='';
+    document.getElementById('customModal').style.display='flex';
+    setTimeout(()=>document.getElementById('cmodalName').focus(),50);
+    return;
+  }
+
+  // Clear old linked
+  const old=p.selections[slotKey];
+  if(old){Object.keys(p.selections).forEach(k=>{if(p.selections[k]===old)delete p.selections[k]})}
+
+  if(!code){delete p.selections[slotKey]}
+  else{
+    p.selections[slotKey]=code;
+    const info=COURSES[code];
+    if(info&&info.slots.length>1&&!info.placeholder){
+      info.slots.forEach(s=>{const sk=s.day+'_'+s.time;p.selections[sk]=code});
+    }
+  }
+  closeDropdown();render();
+}
+
+function closeCustomModal(){
+  document.getElementById('customModal').style.display='none';
+  pendingCustom={periodId:null,slotKey:null,type:null};
+}
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('customModal').style.display==='none')return;
+  if(e.key==='Escape')closeCustomModal();
+  if(e.key==='Enter')confirmCustomCourse();
+});
+
+function confirmCustomCourse(){
+  const {periodId,slotKey,type}=pendingCustom;
+  if(!periodId)return;
+  const p=state.periods.find(pp=>pp.id===periodId);if(!p)return;
+
+  const nameVal=document.getElementById('cmodalName').value.trim();
+  const ectsRaw=document.getElementById('cmodalEcts').value.trim();
+  const ectsVal=ectsRaw===''?0:parseFloat(ectsRaw)||0;
+
+  const prefix=type==='__other'?'_oth':'_ext';
+  const fakeCode=prefix+'_'+periodId+'_'+slotKey;
+  const defaultName=type==='__other'?'Other DTU Elective / Special Course':'External / Semester Abroad Elective';
+  COURSES[fakeCode]={
+    name:nameVal||defaultName,
+    ects:ectsVal,
+    slots:[],
+    placeholder:true
+  };
+
+  // Clear old linked
+  const old=p.selections[slotKey];
+  if(old){Object.keys(p.selections).forEach(k=>{if(p.selections[k]===old)delete p.selections[k]})}
+
+  p.selections[slotKey]=fakeCode;
+  closeCustomModal();
+  render();
+}
+
+function setPoolOverride(code,poolId){
+  state.poolOverrides[code]=poolId;render();
+}
+
+// Dropdown management — global fixed overlay
+let ddState={open:false,periodId:null,slotKey:null,triggerEl:null,justOpened:false};
+const globalDD=()=>document.getElementById('globalDD');
+
+function positionDD(triggerEl){
+  const dd=globalDD();
+  const r=triggerEl.getBoundingClientRect();
+  const ddW=Math.min(400, window.innerWidth-16);
+  let left=r.left;
+  let top=r.bottom+4;
+  if(left+ddW>window.innerWidth) left=window.innerWidth-ddW-8;
+  if(left<8) left=8;
+  const spaceBelow=window.innerHeight-r.bottom;
+  if(spaceBelow<200&&r.top>200){
+    top=r.top-4;
+    dd.style.maxHeight=Math.min(340,r.top-16)+'px';
+    dd.style.transform='translateY(-100%)';
+  }else{
+    dd.style.maxHeight=Math.min(340,Math.max(spaceBelow-16,120))+'px';
+    dd.style.transform='none';
+  }
+  dd.style.left=left+'px';
+  dd.style.top=top+'px';
+  dd.style.width=ddW+'px';
+}
+
+function openDropdownAt(triggerEl,periodId,slotKey){
+  const dd=globalDD();
+  const pc=cfg();
+  const ps=computePoolStatus();
+  const assignments=ps?.assignments||{};
+  const per=state.periods.find(p=>p.id===periodId);
+  const pt=PT.find(t=>t.id===per.type);
+  let available;
+  if(pt.weeks===3){available=slotIdx[per.type]?.['all_all']||[]}
+  else{available=slotIdx[per.type]?.[slotKey]||[]}
+
+  dd.innerHTML=`<div class="dd-search"><input type="text" placeholder="Search by name or course number..." oninput="filterDD(this.value)"></div><div class="dd-list">${buildDDPanel(periodId,slotKey,available,pc,assignments)}</div>`;
+  positionDD(triggerEl);
+  dd.classList.add('open');
+  ddState={open:true,periodId,slotKey,triggerEl,justOpened:true};
+  requestAnimationFrame(()=>{ddState.justOpened=false});
+  const inp=dd.querySelector('.dd-search input');
+  if(inp)setTimeout(()=>inp.focus(),50);
+}
+function filterDD(q){
+  const dd=globalDD();
+  const list=dd.querySelector('.dd-list');if(!list)return;
+  const lq=q.toLowerCase().trim();
+  list.querySelectorAll('.dd-opt').forEach(el=>{
+    if(!lq){el.style.display='';return}
+    const code=el.querySelector('.dd-code')?.textContent||'';
+    const name=el.querySelector('.dd-name')?.textContent||'';
+    const match=code.toLowerCase().includes(lq)||name.toLowerCase().includes(lq);
+    el.style.display=match?'':'none';
+  });
+  list.querySelectorAll('.dd-sep').forEach(sep=>{
+    let next=sep.nextElementSibling;
+    let hasVisible=false;
+    while(next&&!next.classList.contains('dd-sep')){
+      if(next.classList.contains('dd-opt')&&next.style.display!=='none')hasVisible=true;
+      next=next.nextElementSibling;
+    }
+    sep.style.display=(!lq||hasVisible)?'':'none';
+  });
+}
+
+function toggleDropdown(triggerEl,periodId,slotKey){
+  // If already open for same slot, close
+  if(ddState.open&&ddState.periodId===periodId&&ddState.slotKey===slotKey){
+    closeDropdown();return;
+  }
+  closeDropdown();
+  openDropdownAt(triggerEl,periodId,slotKey);
+}
+
+function closeDropdown(){
+  const dd=globalDD();
+  if(dd){dd.classList.remove('open');dd.innerHTML=''}
+  ddState={open:false,periodId:null,slotKey:null,triggerEl:null,justOpened:false};
+}
+
+// Close on click outside — but not if clicking the trigger (toggle handles that)
+// and not if clicking inside the panel
+document.addEventListener('mousedown',e=>{
+  if(!ddState.open||ddState.justOpened)return;
+  if(e.target.closest('#globalDD'))return;
+  if(e.target.closest('.slot-trigger'))return;
+  closeDropdown();
+});
+
+// Close on page scroll — but NOT when scrolling inside the dropdown panel itself
+// We listen on the page-level scrollable elements only
+document.addEventListener('scroll',e=>{
+  if(!ddState.open)return;
+  // If the scroll originated from inside the dropdown, ignore
+  if(e.target===globalDD()||globalDD()?.contains(e.target))return;
+  closeDropdown();
+},true);
+
+// Reposition on window resize
+window.addEventListener('resize',()=>{
+  if(ddState.open&&ddState.triggerEl)positionDD(ddState.triggerEl);
+});
+
+// Trap wheel/trackpad scroll inside dropdown so it doesn't leak to page
+document.getElementById('globalDD').addEventListener('wheel',e=>{
+  const list=globalDD().querySelector('.dd-list');
+  if(!list)return;
+  const atTop=list.scrollTop===0&&e.deltaY<0;
+  const atBottom=list.scrollTop+list.clientHeight>=list.scrollHeight-1&&e.deltaY>0;
+  if(atTop||atBottom)e.preventDefault();
+},{passive:false});
+
+// ══════════════════════════════════════════════════════════════════════════
+// HELPERS
+// ══════════════════════════════════════════════════════════════════════════
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function allSelectionsSet(){
+  const s=new Set();
+  state.periods.forEach(p=>{const seen=new Set();Object.values(p.selections||{}).forEach(c=>{if(c&&!seen.has(c)){seen.add(c);s.add(c)}})});
+  return s;
+}
+function otherPeriodsSet(periodId){
+  const s=new Set();
+  state.periods.forEach(p=>{if(p.id===periodId)return;
+    Object.values(p.selections||{}).forEach(c=>{if(c&&!c.startsWith('_'))s.add(c)});
+  });return s;
+}
+function periodEcts(p){
+  const seen=new Set();let t=0;
+  Object.values(p.selections||{}).forEach(c=>{if(c&&!seen.has(c)){seen.add(c);t+=(COURSES[c]?.ects||5)}});
+  return t;
+}
+function totalEcts(){
+  const seen=new Set();let t=0;
+  state.periods.forEach(p=>{Object.values(p.selections||{}).forEach(c=>{if(c&&!seen.has(c)){seen.add(c);t+=(COURSES[c]?.ects||5)}})});
+  return t;
+}
+function getWarnings(){
+  const locs={};const w=[];
+  state.periods.forEach(p=>{const seen=new Set();
+    Object.values(p.selections||{}).forEach(c=>{
+      if(!c||c.startsWith('_')||seen.has(c))return;seen.add(c);
+      if(!locs[c])locs[c]=[];locs[c].push(p.label);
+    });
+  });
+  Object.entries(locs).forEach(([c,ls])=>{
+    if(ls.length>1)w.push('Course '+c+' ('+esc(COURSES[c]?.name||c)+') is in multiple periods: '+[...new Set(ls)].join(', '));
+  });
+  return w;
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// BUILD DROPDOWN OPTION HTML
+// ══════════════════════════════════════════════════════════════════════════
+function ddOptHTML(code,pc,disabled,assignments){
+  const c=COURSES[code];if(!c)return'';
+  const pools=getCoursePools(code,pc);
+  const colors=getBarColors(code,pc,assignments);
+  const barCls=colors.length>1?'dual':'single';
+  const barSty=getBarStyle(colors);
+  let poolTags='';
+  if(pools.length>0){
+    poolTags='<div class="dd-pools">'+pools.map(p=>
+      `<span class="dd-pool-tag" style="color:${p.color.base};border-color:${p.color.base}30;background:${p.color.light}">${esc(p.label)}</span>`
+    ).join('')+'</div>';
+  } else if(isRecElective(code,pc)){
+    poolTags='<div class="dd-pools"><span class="dd-pool-tag" style="color:#9ca3af;border-color:#9ca3af30;background:#f9fafb">Rec. Elective</span></div>';
+  } else {
+    poolTags='<div class="dd-pools"><span class="dd-pool-tag" style="color:#6b7280;border-color:#6b728030;background:#f3f4f6">Elective</span></div>';
+  }
+  return `<div class="dd-opt${disabled?' disabled':''}" onclick="event.stopPropagation();${disabled?'':'selectCourse('+this._pid+',\''+this._sk+'\',\''+code+'\')'}">
+    <div class="dd-bar ${barCls}" style="${barSty}"></div>
+    <div class="dd-info">
+      <div class="dd-code" style="color:${colors[0]}">${code}</div>
+      <div class="dd-name">${esc(c.name)}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:6px">
+        <div class="dd-ects">${c.ects} ECTS</div>
+        ${poolTags}
+      </div>
+    </div></div>`;
+}
+
+function buildDDPanel(periodId,slotKey,available,pc,assignments){
+  const others=otherPeriodsSet(periodId);
+  const per=state.periods.find(p=>p.id===periodId);
+  const inPeriod=new Set(Object.values(per?.selections||{}));
+  
+  // Sort into groups: programme-specific, rec. electives, other DTU
+  const progCourses=[], recCourses=[], otherCourses=[];
+  available.forEach(code=>{
+    const pools=getCoursePools(code,pc);
+    if(pools.length>0) progCourses.push(code);
+    else if(isRecElective(code,pc)) recCourses.push(code);
+    else otherCourses.push(code);
+  });
+  
+  let html='';
+  function renderGroup(codes){
+    codes.forEach(code=>{
+      const c=COURSES[code];if(!c)return;
+      const dis=others.has(code)||inPeriod.has(code);
+      const pools=getCoursePools(code,pc);
+      const colors=getBarColors(code,pc,assignments);
+      const barSty=getBarStyle(colors);
+      const barCls=colors.length>1?'dual':'single';
+      let poolTags='';
+      if(pools.length>0){
+        poolTags=pools.map(p=>`<span class="dd-pool-tag" style="color:${p.color.base};border-color:${p.color.base}30;background:${p.color.light}">${esc(p.label)}</span>`).join('');
+      }else if(isRecElective(code,pc)){
+        poolTags='<span class="dd-pool-tag" style="color:#9ca3af;border-color:#9ca3af30;background:#f9fafb">Rec. Elective</span>';
+      }else{
+        poolTags='<span class="dd-pool-tag" style="color:#6b7280;border-color:#6b728030;background:#f3f4f6">Elective</span>';
+      }
+      html+=`<div class="dd-opt${dis?' disabled':''}" onclick="event.stopPropagation();selectCourse(${periodId},'${slotKey}','${code}')">
+        <div class="dd-bar ${barCls}" style="${barSty}"></div>
+        <div class="dd-info">
+          <div class="dd-code" style="color:${colors[0]}">${code}</div>
+          <div class="dd-name">${esc(c.name)}</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap">
+            <div class="dd-ects">${c.ects} ECTS</div>
+            <div class="dd-pools">${poolTags}</div>
+          </div>
+        </div></div>`;
+    });
+  }
+  
+  if(progCourses.length) renderGroup(progCourses);
+  if(recCourses.length){
+    if(progCourses.length) html+=`<div class="dd-sep">Recommended electives</div>`;
+    renderGroup(recCourses);
+  }
+  if(otherCourses.length){
+    html+=`<div class="dd-sep">Other DTU courses (${otherCourses.length})</div>`;
+    renderGroup(otherCourses);
+  }
+  // Separator + special
+  html+=`<div class="dd-sep">Other options</div>`;
+  html+=`<div class="dd-opt" onclick="event.stopPropagation();selectCourse(${periodId},'${slotKey}','__other')">
+    <div class="dd-bar single" style="background:${PC.elective.base}"></div>
+    <div class="dd-info"><div class="dd-code" style="color:${PC.elective.base}">Elective</div>
+    <div class="dd-name">Other DTU elective / special course</div><div class="dd-ects">5 ECTS</div></div></div>`;
+  html+=`<div class="dd-opt" onclick="event.stopPropagation();selectCourse(${periodId},'${slotKey}','__external')">
+    <div class="dd-bar single" style="background:${PC.elective.base}"></div>
+    <div class="dd-info"><div class="dd-code" style="color:${PC.elective.base}">External</div>
+    <div class="dd-name">External / semester abroad elective</div><div class="dd-ects">5 ECTS</div></div></div>`;
+  // Clear option
+  html+=`<div class="dd-opt" onclick="event.stopPropagation();selectCourse(${periodId},'${slotKey}','')">
+    <div class="dd-bar single" style="background:#ddd"></div>
+    <div class="dd-info"><div class="dd-code" style="color:#aaa">—</div>
+    <div class="dd-name" style="color:#aaa">Leave empty</div></div></div>`;
+  return html;
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════════════════════════════════
+function render(){
+  closeDropdown();
+  const pc=cfg();
+  const ps=computePoolStatus();
+  const assignments=ps?.assignments||{};
+
+  // Requirements card
+  const rc=document.getElementById('reqCard');
+  if(!pc){rc.style.display='none';document.getElementById('periodSetup').style.display='none';document.getElementById('periodsContainer').innerHTML='';document.getElementById('saveSection').style.display='none';return}
+  rc.style.display='block';document.getElementById('periodSetup').style.display='block';
+
+  // Requirement bars — two-row grid: bars bottom-aligned, labels below
+  let rhtml='<div class="card"><div class="card-h"><span class="step">2</span><h2>Requirements Overview</h2></div><div class="card-b">';
+  rhtml+=`<div style="display:grid;grid-template-columns:repeat(${pc.pools.length},1fr);grid-template-rows:auto auto;gap:0 2px;padding:8px 0">`;
+  // Row 1: numbers + bars (bottom-aligned within row)
+  pc.pools.forEach(pool=>{
+    const earned=ps.poolEcts[pool.id]||0;
+    const filled=Math.min(earned,pool.req);
+    const overflow=Math.max(0,earned-pool.req);
+    const maxH=Math.max(pool.req*2.5,30);
+    const filledH=pool.req>0?(filled/pool.req)*maxH:0;
+    const overH=overflow>0?Math.min(overflow*2.5,25):0;
+    const ok=earned>=pool.req;
+    rhtml+=`<div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;align-self:end">
+      <div class="req-num" style="color:${ok?pool.color.base:'#999'}">${earned}/${pool.req}</div>
+      <div style="display:flex;flex-direction:column;justify-content:flex-end;width:100%;max-width:64px;height:${maxH+overH}px">`;
+    if(overflow>0){
+      rhtml+=`<div class="req-over" style="height:${overH}px;color:${PC.elective.base};border-color:${PC.elective.base}">+${overflow}</div>`;
+    }
+    rhtml+=`<div class="req-bar" style="height:${maxH}px;background:${pool.color.light};border:1px solid ${pool.color.base}22">
+      <div class="req-fill" style="height:${filledH}px;background:${pool.color.base};opacity:.85"></div>
+      ${ok?'<div class="req-check">✓</div>':''}
+    </div></div></div>`;
+  });
+  // Row 2: labels (top-aligned, same grid)
+  pc.pools.forEach(pool=>{
+    rhtml+=`<div style="text-align:center;padding-top:6px;align-self:start"><div class="req-lbl" style="max-width:none">${esc(pool.label)}</div></div>`;
+  });
+  rhtml+='</div>';
+  // Legend
+  rhtml+='<div class="legend">';
+  pc.pools.forEach(pool=>{
+    rhtml+=`<div class="legend-item"><div class="legend-dot" style="background:${pool.color.base};opacity:.85"></div><span class="legend-txt">${esc(pool.label)} (${pool.req} ECTS)</span></div>`;
+  });
+  rhtml+='</div>';
+  // Totals
+  const te=totalEcts();
+  rhtml+=`<div class="totals"><span>Total course ECTS: <b>${te}</b> / 90</span><span>·</span><span>Thesis: 30 ECTS (not shown)</span><span>·</span><span>Grand total: <b>${te+30}</b> / 120</span></div>`;
+  rhtml+='</div></div>';
+  rc.innerHTML=rhtml;
+
+  // Warnings
+  const warns=getWarnings();
+  const wb=document.getElementById('warnBox');
+  if(warns.length){wb.style.display='block';wb.innerHTML=warns.map(w=>'<div>⚠ '+w+'</div>').join('')}
+  else wb.style.display='none';
+
+  // Add buttons
+  document.getElementById('addBtns').innerHTML=PT.map(pt=>
+    `<button class="add-btn" onclick="addPeriod('${pt.id}')"><span style="font-size:16px;line-height:1">+</span> ${pt.label} (${pt.weeks}w)</button>`
+  ).join('');
+  document.getElementById('emptyMsg').style.display=state.periods.length?'none':'block';
+
+  // Periods
+  let phtml='';
+  state.periods.forEach((per,idx)=>{
+    const pt=PT.find(t=>t.id===per.type);
+    const is3=pt.weeks===3;
+    const pe=periodEcts(per);
+    phtml+=`<div class="card" style="margin-bottom:20px"><div class="per-hdr">
+      <div style="display:flex;align-items:center"><span class="lbl">${esc(per.label)}</span><span class="ects-badge">${pe} ECTS</span></div>
+      <div class="ctrls">
+        <button class="mv" onclick="movePeriod(${per.id},-1)" ${idx===0?'disabled':''}title="Move up">↑</button>
+        <button class="mv" onclick="movePeriod(${per.id},1)" ${idx===state.periods.length-1?'disabled':''}title="Move down">↓</button>
+        <button class="rm" onclick="removePeriod(${per.id})" title="Remove">✕</button>
+      </div></div>`;
+    phtml+='<div style="padding:16px;overflow-x:auto">';
+    if(is3) phtml+=render3Week(per,pc,assignments,ps.poolEcts);
+    else phtml+=renderSemester(per,pc,assignments,ps.poolEcts);
+    phtml+='</div></div>';
+  });
+  document.getElementById('periodsContainer').innerHTML=phtml;
+
+  // Show save button when there are periods with selections
+  document.getElementById('saveSection').style.display=state.periods.length>0?'block':'none';
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// RENDER 3-WEEK CALENDAR
+// ══════════════════════════════════════════════════════════════════════════
+function render3Week(per,pc,assignments,poolEcts){
+  const available=slotIdx[per.type]?.['all_all']||[];
+  const selected=per.selections?.['all_all']||'';
+  const info=selected?COURSES[selected]:null;
+  const isPlc=selected&&(selected.startsWith('_oth')||selected.startsWith('_ext'));
+  const colors=selected?getBarColors(selected,pc,assignments):[PC.elective.base];
+  const barSty=getBarStyle(colors);
+  const displayCode=isPlc?(selected.startsWith('_oth')?'Elective':'External'):selected;
+  const pools=selected&&!isPlc?getCoursePools(selected,pc):[];
+
+  const overflowPool3=selected&&!isPlc?getOverflowInfo(selected,pc,assignments,poolEcts):null;
+
+  let h=`<div style="font-size:12px;color:#888;font-family:var(--mono);margin-bottom:10px">Full-time (all weekdays, 8:00–17:00) — select one course for this 3-week period</div>`;
+  h+='<div class="three-grid">';
+  DAYS.forEach(d=>{h+=`<div class="three-hdr">${d}</div>`});
+  DAYS.forEach(d=>{
+    if(selected){
+      h+=`<div class="three-cell filled"><div class="pool-bar" style="${barSty}"></div>
+        <div class="slot-content">
+          <div class="slot-code" style="color:${colors[0]}">${displayCode}</div>
+          <div class="slot-name">${esc(info?.name||'')}</div>
+          <div class="slot-ects">${info?.ects||5} ECTS</div>
+        </div></div>`;
+    }else{
+      h+=`<div class="three-cell empty"><span style="color:#bbb;font-size:11px">—</span></div>`;
+    }
+  });
+  h+='</div>';
+  // Dropdown for 3-week
+  h+=`<div class="three-select"><div style="flex:1;max-width:540px">
+    <div class="slot-trigger" style="min-height:40px;border:1px solid var(--rule);border-radius:3px;font-size:12px" onclick="event.stopPropagation();toggleDropdown(this,${per.id},'all_all')">
+      ${selected?'<span style="color:#555">'+displayCode+' — '+esc(info?.name||'')+'</span> <span style="margin-left:8px;color:#aaa;font-size:10px">click to change</span>':'<span>+ Select a course</span>'}
+    </div>
+  </div>`;
+  // Pool picker
+  if(selected&&!isPlc&&pools.length>1){
+    h+=renderPoolChips(selected,pools,assignments);
+  }
+  // Overflow note
+  if(overflowPool3){
+    h+=`<div class="overflow-note" style="margin-top:6px;display:inline-block">Counts as elective — ${esc(overflowPool3)} min. already met</div>`;
+  }
+  h+='</div>';
+  return h;
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// RENDER 13-WEEK SEMESTER CALENDAR
+// ══════════════════════════════════════════════════════════════════════════
+function renderSemester(per,pc,assignments,poolEcts){
+  const slots=slotIdx[per.type]||{};
+  const timeLabels={am:'8:00–12:00',pm:'13:00–17:00',evening:'18:00–22:00'};
+  const timeRows=[...TIMES,'evening'];
+
+  let h=`<table class="cal"><colgroup><col style="width:80px">`;
+  DAYS.forEach(()=>{h+=`<col style="width:${(100-10)/5}%">`});
+  h+=`</colgroup><thead><tr><th>Time</th>`;
+  DAYS.forEach(d=>{h+=`<th>${d}</th>`});
+  h+='</tr></thead><tbody>';
+
+  timeRows.forEach(time=>{
+    h+='<tr>';
+    h+=`<td class="time-lbl">${timeLabels[time]}</td>`;
+    DAYS.forEach(day=>{
+      if(time==='evening'&&day!=='Tue'){h+='<td class="na"></td>';return}
+      const sk=day+'_'+time;
+      const available=slots[sk]||[];
+      const selected=per.selections?.[sk]||'';
+      const info=selected?COURSES[selected]:null;
+      const isPlc=selected&&(selected.startsWith('_oth')||selected.startsWith('_ext'));
+      const colors=selected?getBarColors(selected,pc,assignments):[PC.elective.base];
+      const barSty=getBarStyle(colors);
+      const barCls=colors.length>1?'dual':'single';
+      const displayCode=isPlc?(selected.startsWith('_oth')?'Elective':'External'):selected;
+      const pools=selected&&!isPlc?getCoursePools(selected,pc):[];
+
+      // Is this a secondary slot for a linked course?
+      const linkedEntries=selected&&!isPlc?Object.entries(per.selections).filter(([k,v])=>v===selected):[];
+      const isPrimary=linkedEntries.length<=1||linkedEntries[0]?.[0]===sk;
+
+      h+='<td class="slot">';
+      if(selected){
+        const overflowPool=isPrimary?getOverflowInfo(selected,pc,assignments,poolEcts):null;
+        h+=`<div class="slot-inner filled">
+          <div class="pool-bar ${barCls}" style="${barSty}"></div>
+          <div class="slot-content">
+            <div class="slot-code" style="color:${colors[0]}">${displayCode}</div>
+            <div class="slot-name">${esc(info?.name||'')}</div>
+            <div class="slot-meta">
+              <span class="slot-ects">${info?.ects||5} ECTS</span>
+              ${isPrimary?`<button class="slot-rm" onclick="selectCourse(${per.id},'${sk}','')">✕</button>`:''}
+            </div>
+            ${isPrimary&&pools.length>1?renderPoolChips(selected,pools,assignments):''}
+            ${overflowPool?`<div class="overflow-note">Counts as elective — ${esc(overflowPool)} min. already met</div>`:''}
+          </div></div>`;
+      }else{
+        h+=`<div class="slot-inner empty">
+          <div class="slot-trigger" onclick="event.stopPropagation();toggleDropdown(this,${per.id},'${sk}')">+ Add course</div>
+        </div>`;
+      }
+      h+='</td>';
+    });
+    h+='</tr>';
+  });
+  h+='</tbody></table>';
+  return h;
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// POOL CHIPS
+// ══════════════════════════════════════════════════════════════════════════
+function renderPoolChips(code,pools,assignments){
+  const assigned=state.poolOverrides[code]||assignments[code]||'';
+  let h='<div class="pool-chips">';
+  pools.forEach(p=>{
+    const act=assigned===p.id;
+    h+=`<span class="pool-chip${act?' active':''}" style="border-color:${p.color.base};${act?'background:'+p.color.base+';color:#fff':'background:'+p.color.light+';color:'+p.color.base}" onclick="setPoolOverride('${code}','${p.id}')">${esc(p.label)}</span>`;
+  });
+  h+='</div>';
+  return h;
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// SAVE / PRINT
+// ══════════════════════════════════════════════════════════════════════════
+// Set today's date
+document.getElementById('planDate').value=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+
+function savePDF(){
+  // Populate print header meta
+  const name=document.getElementById('studentName').value.trim();
+  const date=document.getElementById('planDate').value;
+  const spec=state.spec||'General';
+  const te=totalEcts();
+  let meta=spec+' specialization';
+  if(name)meta=name+' — '+meta;
+  meta+=` — ${te} course ECTS + 30 thesis = ${te+30} ECTS — ${date}`;
+  document.getElementById('printMeta').textContent=meta;
+  window.print();
+}
+
+// Initial render
+render();
+</script>
+</body>
+</html>
